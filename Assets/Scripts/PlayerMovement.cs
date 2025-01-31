@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
     private float speed = 4f;
     private float jumpingPower = 7f;
     private bool isFacingRight = true;
+    private bool isInWater = false;
+    [SerializeField] private LayerMask waterLayer;  // LayerMask to identify water areas
+    [SerializeField] private float sinkSpeed = 1f;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -31,6 +34,35 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+
+                if (isInWater)
+        {
+            SinkInWater();
+        }
+    }
+
+    private void SinkInWater()
+    {
+        if (rb.linearVelocity.y > -2f)  // Prevent the player from sinking too fast
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y - sinkSpeed * Time.fixedDeltaTime);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (waterLayer == (waterLayer | (1 << other.gameObject.layer)))  // Check if the player enters water
+        {
+            isInWater = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (waterLayer == (waterLayer | (1 << other.gameObject.layer)))  // Check if the player exits water
+        {
+            isInWater = false;
+        }
     }
 
     private bool IsGrounded()
