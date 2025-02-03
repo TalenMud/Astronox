@@ -21,6 +21,10 @@ public class ChestInteract : MonoBehaviour
         {
             ToggleChest();
         }
+        if (!isInRange){
+            chestMessage.enabled = false;
+            chestContentsPanel.SetActive(false);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
