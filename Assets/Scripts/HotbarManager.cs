@@ -52,10 +52,12 @@ public class HotbarManager : MonoBehaviour
         {
          if (i == selectedSlot)
         {
+            hotbarSlots[i].color = new Color(0.5f, 0.5f, 0.5f, 1f); 
             hotbarSlots[i].transform.localScale = new Vector2(1.2f, 1.2f); // Increase size
         }
         else
         {
+            hotbarSlots[i].color = Color.white;
             hotbarSlots[i].transform.localScale = Vector2.one; // Reset size
         }
         }

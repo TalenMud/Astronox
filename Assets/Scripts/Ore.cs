@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Ore : MonoBehaviour
 {
+
+    public InventoryItem oreItem;
+    public InventoryManager inventoryManager;
     public string oreName = "Copper Ore";
     public float timeToBreak = 2f; // Time required to break the ore
     public float miningRange = 10f; // How close the player needs to be
@@ -19,7 +22,7 @@ public class Ore : MonoBehaviour
 {       
     if (CanMineOre() && !isBeingMined) // Check if player has drill & is close enough
     {
-        Debug.Log("started mining");
+
         isBeingMined = true;
         miningCoroutine = StartCoroutine(MineOre());
     }
@@ -28,15 +31,14 @@ public class Ore : MonoBehaviour
     private IEnumerator MineOre()
 {
     float timer = 0f;
-    Debug.Log("Mining " + oreName);
 
     while (timer < timeToBreak)
     {
         if (!Input.GetMouseButton(0) || !CanMineOre()) // Stop if player moves or releases mouse
         {
-            Debug.Log("Mining canceled.");
             isBeingMined = false;
             yield break;
+            // broken ore
         }
 
         timer += Time.deltaTime;
@@ -48,12 +50,9 @@ public class Ore : MonoBehaviour
 
     private void BreakOre()
     {
-         Debug.Log(oreName + " Mined!");
 
-        Debug.Log("InventoryManager instance: " + InventoryManager.instance);
         // Add to inventory
-        InventoryManager.instance.AddItem(oreName, Resources.Load<Sprite>("Items/CopperOreIcon"));
-        Debug.Log("UIManager instance: " + UIManager.instance);
+        inventoryManager.AddItem(oreItem);
         // Show UI popup
         UIManager.instance.ShowPopup("You mined " + oreName + "!");
 

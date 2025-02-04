@@ -6,12 +6,11 @@ public class InventoryManager : MonoBehaviour
 {
     public GameObject itemUIPrefab; // Prefab for inventory UI item button
     public static InventoryManager instance;
-    public List<string> inventory = new List<string>(); // Stores item names
+    public Dictionary<string, int> inventory = new Dictionary<string, int>(); // Stores item names & quantities
     public GameObject inventoryDisplayCanvas; // Reference to the canvas where the inventory will be displayed
     private bool inventoryOpen = false;
-    public Dictionary<string, Sprite> itemsIconsDictionary; // Dictionary to map item names to sprite icons
-    private List<GameObject> itemButtons = new List<GameObject>(); // Keep track of created UI buttons to manage them
-
+    public Dictionary<string, Sprite> itemsIconsDictionary; // Maps item names to sprite icons
+    private List<GameObject> itemButtons = new List<GameObject>();
     private void Awake()
     {
         if (instance == null)
@@ -20,63 +19,66 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Prevent duplicates
+            Destroy(gameObject);
         }
 
-        itemsIconsDictionary = new Dictionary<string, Sprite>(); // Initialize dictionary
+        inventoryDisplayCanvas.SetActive(false); // Hide inventory at start
     }
 
     private void Start()
     {
-        inventoryDisplayCanvas.SetActive(false);
-        AddItem("Copper Drill", Resources.Load<Sprite>("Items/CopperDrillIcon")); // Load an icon from resources
-        UpdateInventoryDisplay(); // Initialize the inventory display
+        UpdateInventoryDisplay(); // Initialize UI
     }
 
-    public void AddItem(string itemName, Sprite icon)
+    public void AddItem(InventoryItem newItem)
     {
-        if (!inventory.Contains(itemName))
-        {
-            inventory.Add(itemName);
-            itemsIconsDictionary[itemName] = icon; // Store item name to sprite mapping
-            Debug.Log(itemName + " added to inventory!");
-            UpdateInventoryDisplay(); // Refresh the display
-        }
+        if (inventory.ContainsKey(itemSO.itemName))
+    {
+        inventory[itemSO.itemName]++; // Increase count
+    }
+    else
+    {
+        inventory[itemSO.itemName] = 1; // Add new item
+        itemsIconsDictionary[itemSO.itemName] = itemSO.icon; // Store item icon
     }
 
-    public bool HasItem(string itemName)
+    Debug.Log(itemSO.itemName + " added! Total: " + inventory[itemSO.itemName]);
+    UpdateInventoryDisplay();
+    }
+
+    public bool HasItem(InventoryItem item)
     {
-        return inventory.Contains(itemName);
+        return playerInventory.items.Contains(item);
     }
 
     private void UpdateInventoryDisplay()
     {
-        // Clear existing buttons to avoid duplicates
+       // Clear existing buttons to avoid duplicates
         foreach (var button in itemButtons)
         {
-            Destroy(button); // Destroy old buttons before updating
+            Destroy(button);
         }
-        itemButtons.Clear(); // Clear the list of buttons
+        itemButtons.Clear();
 
         // Create a new button for each item
         foreach (var item in inventory)
         {
-            GameObject newItemButton = Instantiate(itemUIPrefab, inventoryDisplayCanvas.transform); // Assuming itemUIPrefab is the UI element for displaying items
-            itemButtons.Add(newItemButton); // Add the button to the list
+            GameObject newItemButton = Instantiate(itemUIPrefab, inventoryDisplayCanvas.transform);
+            itemButtons.Add(newItemButton);
 
-            // Set the item's name
-            Text itemText = newItemButton.GetComponentInChildren<Text>(); // Assuming there's a Text component in the prefab
+            // Set the item's name with quantity (e.g., "Iron Ore x2")
+            Text itemText = newItemButton.GetComponentInChildren<Text>();
             if (itemText != null)
             {
-                itemText.text = item;
+                itemText.text = " x" + item.Value; // Example: "Iron Ore x2"
             }
 
-            // Set the item's icon (if it has one)
-            Sprite icon = itemsIconsDictionary[item];
-            Image itemImage = newItemButton.GetComponent<Image>(); // Assuming there's an Image component in the prefab
+            // Set the item's icon (if available)
+            Sprite icon = itemsIconsDictionary[item.Key];
+            Image itemImage = newItemButton.GetComponent<Image>();
             if (icon != null && itemImage != null)
             {
-                itemImage.sprite = icon; // Assign item icon to button
+                itemImage.sprite = icon;
             }
         }
     }
@@ -92,8 +94,6 @@ public class InventoryManager : MonoBehaviour
     private void ToggleInventory()
     {
         inventoryOpen = !inventoryOpen;
-
-        // Show or hide the inventory display based on whether it's open or not
         inventoryDisplayCanvas.SetActive(inventoryOpen);
     }
 }

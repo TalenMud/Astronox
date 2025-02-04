@@ -1993,11 +1993,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 965b158657b2f544aa4bb08f45d6393e, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a6d4e45282d28b0ab7840138958c20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 423142049}
-  offset: {x: 0, y: 1}
+  offset: {x: 0, y: 2}
   smoothSpeed: 0.125
 --- !u!1001 &574942588
 PrefabInstance:
@@ -3402,9 +3402,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3c70d36d0139c643a3af5fbe95c1acb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUIPrefab: {fileID: 8766655579462674447, guid: eb5e9295613777a4c8b31219b1d053cd, type: 3}
-  inventory: []
+  playerInventory: {fileID: 11400000, guid: f62ec790d855b5ad5a9598f19f3a1f93, type: 2}
   inventoryDisplayCanvas: {fileID: 930028920}
+  itemUIPrefab: {fileID: 8766655579462674447, guid: eb5e9295613777a4c8b31219b1d053cd, type: 3}
+  itemContainer: {fileID: 930028921}
 --- !u!1 &930028920
 GameObject:
   m_ObjectHideFlags: 0
@@ -5089,8 +5090,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 7482667652216324306, guid: 5dbd49eb0b920c9a29bae9c3e3b0629f, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -14383,7 +14384,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02941f5cdfac42f45a59abee658ace91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oreName: Steel Ore
+  oreItem: {fileID: 11400000, guid: 7453ad58e247cd3919ad5a28f35df717, type: 2}
+  inventoryManager: {fileID: 920505168}
+  oreName: Copper Ore
   timeToBreak: 2
   miningRange: 5
 --- !u!1001 &2086860219
