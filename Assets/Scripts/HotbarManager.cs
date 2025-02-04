@@ -3,85 +3,69 @@ using UnityEngine.UI;
 
 public class HotbarManager : MonoBehaviour
 {
-    public static HotbarManager instance;
-    public Image[] hotbarSlots; // UI Images for each slot
-    public Sprite[] itemIcons; // Item images/icons
-    public int selectedSlot = 0;
-
+    public static HotbarManager instance; // Singleton instance of HotbarManager
+    public Image[] hotbarSlots; // UI Images for each hotbar slot (set in inspector)
+    public int selectedSlot = 0; // Default selected slot (0, 1, or 2 for 3 slots)
 
     private void Awake()
     {
         if (instance == null) instance = this;
-        else Destroy(gameObject); // Prevent duplicate instances
+        else Destroy(gameObject); // Ensures there is only one instance of HotbarManager
     }
 
-
-    void Start()
+    private void Start()
     {
-        AssignItemToSlot(0, itemIcons[0]);
-        UpdateHotbarUI();
+        UpdateHotbarUI(); // Update UI when game starts
     }
 
-    void Update()
+    private void Update()
     {
-        HandleInput();
+        HandleInput(); // Check for hotbar slot selection input
     }
 
-    void HandleInput()
+    // Handles input for selecting slots (1, 2, 3 keys or key 1, 2, 3)
+    private void HandleInput()
     {
-        // Check for number key presses (1-6)
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) // Select slot 1, 2, or 3
             {
                 SelectSlot(i);
             }
         }
     }
 
-    void SelectSlot(int slotIndex)
+    // Assigns an image (tool icon) to a slot
+    public void AssignImageToSlot(int slotIndex, Sprite itemIcon)
     {
-        selectedSlot = slotIndex;
-        UpdateHotbarUI();
+        if (slotIndex < 0 || slotIndex >= hotbarSlots.Length) return; // Ensure valid slot index
+
+        hotbarSlots[slotIndex].sprite = itemIcon; // Assign image to the slot
+        hotbarSlots[slotIndex].color = Color.white; // Ensure it's visible (not transparent)
     }
 
-    void UpdateHotbarUI()
+    // Select a hotbar slot (changes UI appearance)
+    private void SelectSlot(int slotIndex)
     {
-        // Highlight the selected slot
+        selectedSlot = slotIndex; // Update the selected slot
+        UpdateHotbarUI(); // Refresh UI to reflect the selected slot
+    }
+
+    // Updates the hotbar UI, highlights the selected slot
+    private void UpdateHotbarUI()
+    {
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
-         if (i == selectedSlot)
-        {
-            hotbarSlots[i].color = new Color(0.5f, 0.5f, 0.5f, 1f); 
-            hotbarSlots[i].transform.localScale = new Vector2(1.2f, 1.2f); // Increase size
-        }
-        else
-        {
-            hotbarSlots[i].color = Color.white;
-            hotbarSlots[i].transform.localScale = Vector2.one; // Reset size
-        }
+            if (i == selectedSlot)
+            {
+                hotbarSlots[i].color = new Color(0.5f, 0.5f, 0.5f, 1f); // Highlight selected slot
+                hotbarSlots[i].transform.localScale = new Vector2(1.2f, 1.2f); // Scale up selected slot
+            }
+            else
+            {
+                hotbarSlots[i].color = Color.white; // Normal slot color
+                hotbarSlots[i].transform.localScale = Vector2.one; // Reset scale for non-selected slots
+            }
         }
     }
-
-    public void AssignItemToSlot(int slotIndex, Sprite itemIcon)
-{
-    // Check if the slot is already occupied
-    if (hotbarSlots[slotIndex].sprite != null) 
-    {
-        UIManager.instance.ShowPopup("Slot " + (slotIndex + 1) + " already has an item!");
-        return; // Don't assign the item if the slot is already filled
-    }
-
-    // If slot is empty, assign the item to the slot
-    hotbarSlots[slotIndex].sprite = itemIcon;
-    UIManager.instance.ShowPopup("Item added to slot " + (slotIndex + 1));
 }
-
-public void UseItem(int slotIndex)
-    {
-        UIManager.instance.ShowPopup("Using item in slot " + (slotIndex + 1));
-        // Implement item use logic (e.g., consume potion, equip weapon)
-    }
-
-}
-

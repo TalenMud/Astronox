@@ -17,3 +17,4 @@ MonoBehaviour:
   description: A basic drill used for mining ores
   isTool: 1
   type: Drill
+  isStackable: 0

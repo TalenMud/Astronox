@@ -3,72 +3,65 @@ using System.Collections;
 
 public class Ore : MonoBehaviour
 {
-
-    public InventoryItem oreItem;
-    public InventoryManager inventoryManager;
+    public InventoryItem oreItem; // Ore item reference
     public string oreName = "Copper Ore";
-    public float timeToBreak = 2f; // Time required to break the ore
-    public float miningRange = 10f; // How close the player needs to be
+    public float timeToBreak = 2f; // Mining duration
+    public float miningRange = 10f; // Mining distance
     private bool isBeingMined = false;
     private Coroutine miningCoroutine;
-    private Transform player; // Reference to the player
+    private Transform player; // Player reference
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform; // Find player
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
     }
 
     public void StartMining()
-{       
-    if (CanMineOre() && !isBeingMined) // Check if player has drill & is close enough
     {
-
-        isBeingMined = true;
-        miningCoroutine = StartCoroutine(MineOre());
+        if (CanMineOre() && !isBeingMined)
+        {
+            isBeingMined = true;
+            miningCoroutine = StartCoroutine(MineOre());
+        }
     }
-}
 
     private IEnumerator MineOre()
-{
-    float timer = 0f;
-
-    while (timer < timeToBreak)
     {
-        if (!Input.GetMouseButton(0) || !CanMineOre()) // Stop if player moves or releases mouse
+        float timer = 0f;
+
+        while (timer < timeToBreak)
         {
-            isBeingMined = false;
-            yield break;
-            // broken ore
+            if (!Input.GetMouseButton(0) || !CanMineOre()) // Stop if player moves or releases mouse
+            {
+                isBeingMined = false;
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
         }
 
-        timer += Time.deltaTime;
-        yield return null;
+        BreakOre();
     }
-
-    BreakOre();
-}
 
     private void BreakOre()
     {
-
-        // Add to inventory
-        inventoryManager.AddItem(oreItem);
-        // Show UI popup
-        UIManager.instance.ShowPopup("You mined " + oreName + "!");
-
-        Destroy(gameObject);
+        if (InventoryManager.instance != null) // Ensure inventory exists
+        {
+            // Stack ore items if they are stackable, otherwise add them as a new item
+            // quest status += 1
+            UIManager.instance.ShowPopup("You mined " + oreName + "!");
+            Destroy(gameObject); // Remove ore after mining
+        }
     }
-    
 
     private bool CanMineOre()
-{   
-    // Check if HotbarManager exists first (to prevent errors)
-    if (HotbarManager.instance == null) return false;
+    {
+        if (HotbarManager.instance == null || player == null) return false;
 
         bool isCloseEnough = (transform.position - player.position).sqrMagnitude <= miningRange * miningRange;
-        if (HotbarManager.instance == null) return false; // Prevent errors if missing
-        bool hasDrillEquipped = HotbarManager.instance.selectedSlot == 0;
+        bool hasDrillEquipped = HotbarManager.instance.selectedSlot == 0; // Assuming drill is in slot 0
 
-    return isCloseEnough && hasDrillEquipped;
-}
+        return isCloseEnough && hasDrillEquipped;
+    }
 }
