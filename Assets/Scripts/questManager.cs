@@ -8,13 +8,14 @@ public class QuestManager : MonoBehaviour
 
     public static QuestManager instance;
     
-    mineIcon = Resources.Load<Sprite>("Icons/mineIcon");
-    discoverIcon = Resources.Load<Sprite>("Icons/discoverIcon");
-    defeatIcon = Resources.Load<Sprite>("Icons/defeatIcon"); 
-    collectIcon = Resources.Load<Sprite>("Icons/collectIcon");
-    lootIcon = Resources.Load<Sprite>("Icons/lootIcon");
+   public Sprite mineIcon;
+   public Sprite discoverIcon;
+   public Sprite defeatIcon;
+   public Sprite collectIcon;
+   public Sprite lootIcon;
+   public Sprite chestIcon;
 
-    public List<Quest> activeQuests = new List<Quest>();
+   public List<Quest> activeQuests = new List<Quest>();
 
     [Header("UI Elements")]
     public GameObject questUIPrefab; 
@@ -22,6 +23,7 @@ public class QuestManager : MonoBehaviour
 
     private void Awake()
     {
+        PlayerPrefs.DeleteKey("QuestData"); // DELETE BEFORE REAL GAME !!!!!!
         if (instance == null)
         {
             instance = this;
@@ -36,7 +38,9 @@ public class QuestManager : MonoBehaviour
 
     private void Start()
     {
-        // If no saved quests, set initial quests
+    
+
+       
         if (activeQuests.Count == 0)
         {
             InitializeQuests();
@@ -74,30 +78,30 @@ public class QuestManager : MonoBehaviour
 
     private void RefreshQuestUI()
 {
-    // Clear existing UI elements
+    
     foreach (Transform child in questPanel)
     {
         Destroy(child.gameObject);
     }
 
-    // Create UI elements for each active quest
+   
     foreach (Quest quest in activeQuests)
     {
-        // Instantiate the quest prefab
+        
         GameObject questUI = Instantiate(questUIPrefab, questPanel);
 
-        // Get references to the UI elements
-        Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>(); // Quest icon
-        Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>(); // Progress bar
-        Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>(); // Checkmark
+        
+        Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>(); 
+        Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>(); 
+        Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>(); 
 
-        // Set the icon based on the quest type
+        
         icon.sprite = GetQuestIcon(quest.questType);
 
-        // Set progress bar values
-        progressBar.fillAmount = quest.requiredProgress / quest.currentProgress;
+        
+        progressBar.fillAmount = quest.currentProgress / quest.requiredProgress;
 
-        // Show checkmark if the quest is completed
+        
         checkmark.enabled = quest.isCompleted;
     }
 }
@@ -107,11 +111,11 @@ private Sprite GetQuestIcon(QuestType questType)
 {
     switch (questType)
     {
-        case QuestType.Collect: return coinIcon;  // You can assign the coin icon here
-        case QuestType.Defeat: return enemyIcon;  // Assign the enemy icon here
+        case QuestType.Collect: return collectIcon;  
+        case QuestType.Defeat: return defeatIcon;  
         case QuestType.Discover: return chestIcon;
-        case QuestType.Mine: return mineIcon;  // Assign the chest icon here
-        case questType.Loot: return lootIcon;
+        case QuestType.Mine: return mineIcon;  
+        case QuestType.Loot: return lootIcon;
         default: return null;
     }
 }
@@ -135,7 +139,7 @@ private Sprite GetQuestIcon(QuestType questType)
     }
 }
 
-// Wrapper class for serializing lists in JSON
+
 [System.Serializable]
 public class QuestListWrapper
 {
