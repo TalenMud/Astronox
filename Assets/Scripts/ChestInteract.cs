@@ -3,27 +3,25 @@ using UnityEngine.UI;
 
 public class ChestInteract : MonoBehaviour
 {
-    public GameObject chestContentsPanel; // UI Panel showing chest contents
-    public SpriteRenderer chestMessage; // UI Text that shows "Press E to open" when nearby
-    private bool isInRange = false; // Player proximity flag
-    private bool isOpened = false; // Check if the chest is already opened
-    public GameObject[] chestItems;
+    public Inventory inventoryScipt;
+    public InventoryItem loot;
+    public SpriteRenderer chestMessage; 
+    private bool isInRange = false; 
+    private bool isOpened = false; 
 
     void Start()
     {
-        chestContentsPanel.SetActive(false); // Hide chest contents UI initially
-        chestMessage.enabled = false; // Hide message initially
+        chestMessage.enabled = false; 
     }
 
     void Update()
     {
-        if (isInRange && Input.GetKeyDown(KeyCode.E))
+        if (isInRange && Input.GetKeyDown(KeyCode.E) && isOpened == false)
         {
-            ToggleChest();
+            OpenChest();
         }
-        if (!isInRange){
-            chestMessage.enabled = false;
-            chestContentsPanel.SetActive(false);
+        if (!isInRange && isOpened == true){
+            Destroy(gameObject);
         }
     }
 
@@ -47,34 +45,12 @@ public class ChestInteract : MonoBehaviour
 
     void OpenChest()
     {
-        isOpened = true;
-        chestContentsPanel.SetActive(true); // Show chest contents panel
+        isOpened = true; 
         chestMessage.enabled = false;
+        QuestManager.instance.UpdateQuestProgress("Q1P1", 1);
         
-        // Display items inside the chest
-        foreach (var item in chestItems)
-        {
-            item.SetActive(true); // Or instantiate the item prefab, for example
-            Debug.Log("Item added: " + item.name);
-        }
+        inventoryScipt.AddItem(loot, 0);
+        
     }
 
-    void CloseChest(){
-
-        isOpened = false;
-        chestContentsPanel.SetActive(false);
-
-    }
-
-        public void ToggleChest()
-    {
-        if (isOpened)
-        {
-            CloseChest();
-        }
-        else
-        {
-            OpenChest();
-        }
-    }
 }

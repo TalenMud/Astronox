@@ -6,7 +6,7 @@ public class Inventory : ScriptableObject
 {
     public List<InventoryItem> items = new List<InventoryItem>();
 
-    public void AddItem(InventoryItem item)
+    public void AddItem(InventoryItem item, int slot)
     {
         if (item.isStackable)
         {
@@ -23,7 +23,7 @@ public class Inventory : ScriptableObject
         }
         // If it's not stackable or not found, add as a new item
         items.Add(item);
-        Debug.Log(item.itemName + " added to inventory!");
+        HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
     }
 
     public void RemoveItem(InventoryItem item)
@@ -42,4 +42,16 @@ public class Inventory : ScriptableObject
             }
         }
     }
+    public bool CheckIfHasItem(string itemName)
+    {
+        foreach (InventoryItem item in items)
+        {
+            if (item.itemName == itemName){ // Compare itemName instead of name
+                return true;
+            }
+        
+        }
+        return false;
+    }
+
 }

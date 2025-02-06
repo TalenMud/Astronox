@@ -17,7 +17,6 @@ public class QuestManager : MonoBehaviour
 
    public List<Quest> activeQuests = new List<Quest>();
 
-    [Header("UI Elements")]
     public GameObject questUIPrefab; 
     public Transform questPanel; 
 
@@ -97,16 +96,19 @@ public class QuestManager : MonoBehaviour
 
         
         icon.sprite = GetQuestIcon(quest.questType);
-
+        checkmark.enabled = quest.isCompleted;
         
         progressBar.fillAmount = quest.currentProgress / quest.requiredProgress;
-
-        
+        if (quest.isCompleted)
+        {
         checkmark.enabled = quest.isCompleted;
+        progressBar.fillAmount = quest.currentProgress / quest.requiredProgress;
+        Destroy(questUI);
+
+        }
+        
     }
 }
-
-
 private Sprite GetQuestIcon(QuestType questType)
 {
     switch (questType)

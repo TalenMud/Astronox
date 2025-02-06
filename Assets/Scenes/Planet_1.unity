@@ -3902,9 +3902,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff70c4c6ba02a5479cc0282301b757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestContentsPanel: {fileID: 1225098272}
+  questManager: {fileID: 2094821286}
+  inventoryScipt: {fileID: 11400000, guid: f62ec790d855b5ad5a9598f19f3a1f93, type: 2}
+  loot: {fileID: 11400000, guid: a63ccbd429f392d41977af2a6c807513, type: 2}
   chestMessage: {fileID: 1550949785}
-  chestItems: []
 --- !u!212 &904762419
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14778,10 +14779,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mineIcon: {fileID: -6007857137893288414, guid: 68cb3ef50c1bd494c93514933482466f, type: 3}
   discoverIcon: {fileID: 7482667652216324306, guid: e4e2d531ba6b1928fb1ab3e9efc02b4e, type: 3}
-  defeatIcon: {fileID: 7482667652216324306, guid: 0dc2a8705bc6fc344ab5b6e02b7d37d7, type: 3}
+  defeatIcon: {fileID: -1957015526953577708, guid: 1f30ac3eac5939941a5cd7c968a0a697, type: 3}
   collectIcon: {fileID: 7482667652216324306, guid: 241d23ae56b0976f9ab9b7deb35fe58a, type: 3}
-  lootIcon: {fileID: 7482667652216324306, guid: 44c079c517a834689b55e404f4c10039, type: 3}
-  chestIcon: {fileID: 7482667652216324306, guid: 0dc2a8705bc6fc344ab5b6e02b7d37d7, type: 3}
+  lootIcon: {fileID: 7353621977714259684, guid: 7017f2904e56b54f99ad3da55534a09b, type: 3}
+  chestIcon: {fileID: 7353621977714259684, guid: 7017f2904e56b54f99ad3da55534a09b, type: 3}
   activeQuests: []
   questUIPrefab: {fileID: 4103191344448794575, guid: 2276d57cd3ba49b3181f90ddd09aa878, type: 3}
   questPanel: {fileID: 821037340}

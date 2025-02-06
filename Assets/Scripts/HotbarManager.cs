@@ -23,12 +23,12 @@ public class HotbarManager : MonoBehaviour
         HandleInput(); // Check for hotbar slot selection input
     }
 
-    // Handles input for selecting slots (1, 2, 3 keys or key 1, 2, 3)
+    
     private void HandleInput()
     {
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) // Select slot 1, 2, or 3
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) 
             {
                 SelectSlot(i);
             }
@@ -36,12 +36,13 @@ public class HotbarManager : MonoBehaviour
     }
 
     // Assigns an image (tool icon) to a slot
-    public void AssignImageToSlot(int slotIndex, Sprite itemIcon)
+    public void AssignItemToSlot( Sprite itemIcon, int slotIndex)
     {
         if (slotIndex < 0 || slotIndex >= hotbarSlots.Length) return; // Ensure valid slot index
 
         hotbarSlots[slotIndex].sprite = itemIcon; // Assign image to the slot
         hotbarSlots[slotIndex].color = Color.white; // Ensure it's visible (not transparent)
+        UpdateHotbarUI();
     }
 
     // Select a hotbar slot (changes UI appearance)
