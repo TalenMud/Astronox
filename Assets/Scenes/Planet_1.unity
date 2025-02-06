@@ -3902,10 +3902,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff70c4c6ba02a5479cc0282301b757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questManager: {fileID: 2094821286}
-  inventoryScipt: {fileID: 11400000, guid: f62ec790d855b5ad5a9598f19f3a1f93, type: 2}
   loot: {fileID: 11400000, guid: a63ccbd429f392d41977af2a6c807513, type: 2}
   chestMessage: {fileID: 1550949785}
+  inventory: {fileID: 11400000, guid: f62ec790d855b5ad5a9598f19f3a1f93, type: 2}
 --- !u!212 &904762419
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -14369,8 +14368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hotbarSlots:
   - {fileID: 1537025308}
-  - {fileID: 1012990285}
   - {fileID: 1423153563}
+  - {fileID: 1012990285}
   selectedSlot: 0
 --- !u!114 &2018736906
 MonoBehaviour:
@@ -14616,6 +14615,7 @@ MonoBehaviour:
   oreName: Copper Ore
   timeToBreak: 2
   miningRange: 5
+  inventory: {fileID: 11400000, guid: f62ec790d855b5ad5a9598f19f3a1f93, type: 2}
 --- !u!1001 &2092852377
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14729,6 +14729,7 @@ GameObject:
   - component: {fileID: 2094821285}
   - component: {fileID: 2094821284}
   - component: {fileID: 2094821286}
+  - component: {fileID: 2094821287}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -14786,6 +14787,21 @@ MonoBehaviour:
   activeQuests: []
   questUIPrefab: {fileID: 4103191344448794575, guid: 2276d57cd3ba49b3181f90ddd09aa878, type: 3}
   questPanel: {fileID: 821037340}
+--- !u!114 &2094821287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2094821282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 447052485711bb54b90e6bc54a68ffe9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCrosshair: {fileID: 2800000, guid: a0a6450514c0bfa4a998c92f1cd43382, type: 3}
+  enemyCrosshair: {fileID: 0}
+  miningCrosshair: {fileID: 2800000, guid: a101afe130c902a49b01d46f71fac8c8, type: 3}
 --- !u!1 &2106234125
 GameObject:
   m_ObjectHideFlags: 0

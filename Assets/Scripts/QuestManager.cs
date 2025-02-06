@@ -8,6 +8,7 @@ public class QuestManager : MonoBehaviour
 
     public static QuestManager instance;
     
+    
    public Sprite mineIcon;
    public Sprite discoverIcon;
    public Sprite defeatIcon;
@@ -46,6 +47,7 @@ public class QuestManager : MonoBehaviour
         }
 
         RefreshQuestUI();
+        Canvas.ForceUpdateCanvases();
     }
 
     public void InitializeQuests()
@@ -62,6 +64,7 @@ public class QuestManager : MonoBehaviour
         activeQuests.Add(quest);
         SaveQuests();
         RefreshQuestUI();
+        Canvas.ForceUpdateCanvases();
     }
 
     public void UpdateQuestProgress(string questID, int progress)
@@ -72,6 +75,7 @@ public class QuestManager : MonoBehaviour
             quest.UpdateProgress(progress);
             SaveQuests();
             RefreshQuestUI();
+            Canvas.ForceUpdateCanvases();
         }
     }
 
@@ -94,17 +98,15 @@ public class QuestManager : MonoBehaviour
         Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>(); 
         Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>(); 
 
+        progressBar.fillAmount = quest.portionDone;
         
         icon.sprite = GetQuestIcon(quest.questType);
         checkmark.enabled = quest.isCompleted;
         
-        progressBar.fillAmount = quest.currentProgress / quest.requiredProgress;
-        if (quest.isCompleted)
-        {
-        checkmark.enabled = quest.isCompleted;
-        progressBar.fillAmount = quest.currentProgress / quest.requiredProgress;
-        Destroy(questUI);
 
+        if (quest.isCompleted && activeQuests.Count > 3)
+        {
+        Destroy(questUI);
         }
         
     }

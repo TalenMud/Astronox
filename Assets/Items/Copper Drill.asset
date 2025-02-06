@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Copper Drill
   m_EditorClassIdentifier: 
   itemName: Copper Drill
-  itemIcon: {fileID: 8366124257116253363, guid: eb141babd2ebaa347946ede3cb0324de, type: 3}
+  itemIcon: {fileID: 6815405411228783977, guid: c1d95bb627e34ad42a428408325f50d5, type: 3}
   description: A basic drill used for mining ores
   isTool: 1
   type: Drill
   isStackable: 0
+  stackCount: 1

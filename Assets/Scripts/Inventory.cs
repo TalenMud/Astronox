@@ -6,24 +6,28 @@ public class Inventory : ScriptableObject
 {
     public List<InventoryItem> items = new List<InventoryItem>();
 
+
     public void AddItem(InventoryItem item, int slot)
     {
         if (item.isStackable)
         {
-            // Check if the item already exists in the inventory
+            
             foreach (InventoryItem existingItem in items)
             {
                 if (existingItem.itemName == item.itemName)
                 {
                     existingItem.stackCount += item.stackCount; // Stack items together
-                    Debug.Log(item.itemName + " stacked in inventory!");
+                    UIManager.instance.ShowPopup(item.itemName + " added to inventory, you have " + (item.stackCount).ToString());
                     return;
                 }
             }
+            
         }
-        // If it's not stackable or not found, add as a new item
         items.Add(item);
+        if (item.isTool){
         HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
+        UIManager.instance.ShowPopup(item.itemName + " added to hotbar");
+        }
     }
 
     public void RemoveItem(InventoryItem item)

@@ -5,11 +5,12 @@ public class Ore : MonoBehaviour
 {
     public InventoryItem oreItem; // Ore item reference
     public string oreName = "Copper Ore";
-    public float timeToBreak = 2f; // Mining duration
+    public float timeToBreak = 1.5f; // Mining duration
     public float miningRange = 10f; // Mining distance
     private bool isBeingMined = false;
     private Coroutine miningCoroutine;
     private Transform player; // Player reference
+    public Inventory inventory;
 
     private void Start()
     {
@@ -46,13 +47,10 @@ public class Ore : MonoBehaviour
 
     private void BreakOre()
     {
-        if (InventoryManager.instance != null) // Ensure inventory exists
-        {
-            // Stack ore items if they are stackable, otherwise add them as a new item
-            // quest status += 1
+            inventory.AddItem(oreItem, 1);
+            QuestManager.instance.UpdateQuestProgress("Q2P1", 1);
             UIManager.instance.ShowPopup("You mined " + oreName + "!");
-            Destroy(gameObject); // Remove ore after mining
-        }
+            Destroy(gameObject); 
     }
 
     private bool CanMineOre()

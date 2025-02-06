@@ -1,15 +1,17 @@
 using UnityEngine;
+using System;
 [System.Serializable]
 public class Quest
 {
-    // Basic quest information
-    public string questID;            // The name of the quest (this could be icon-based instead of text)
-    public bool isCompleted;            // Whether the quest is completed
-    public int currentProgress;         // Current progress towards completing the quest
-    public int requiredProgress;        // How much progress is required to complete the quest
-    public QuestType questType;         // The type of the quest (e.g., Collect, Defeat, Discover)
+    
+    public string questID;            
+    public bool isCompleted;            
+    public float currentProgress;         
+    public float requiredProgress;        
+    public QuestType questType;    
+    public float portionDone;    
 
-    // Constructor to initialize a new quest
+    
     public Quest(string name, int required, QuestType type)
     {
         questID = name;
@@ -17,18 +19,20 @@ public class Quest
         questType = type;
         currentProgress = 0;
         isCompleted = false;
+        portionDone = 0;
     }
 
-    // Method to update progress (called when player completes an action related to the quest)
+    
     public void UpdateProgress(int amount)
     {
         if (!isCompleted)
         {
-            currentProgress += amount;  // Increment progress
+            currentProgress += amount;  
+            portionDone = (currentProgress/requiredProgress);
             if (currentProgress >= requiredProgress)
             {
-                currentProgress = requiredProgress;  // Cap progress at the required amount
-                isCompleted = true;  // Mark the quest as completed
+                currentProgress = requiredProgress;  
+                isCompleted = true;  
             }
         }
     }
