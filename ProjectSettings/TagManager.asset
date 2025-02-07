@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Acid
   - Ore
+  - Enemy
   layers:
   - Default
   - TransparentFX

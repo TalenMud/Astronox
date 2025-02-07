@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class Ore : MonoBehaviour
 {
+    
     public InventoryItem oreItem; // Ore item reference
     public string oreName = "Copper Ore";
     public float timeToBreak = 1.5f; // Mining duration

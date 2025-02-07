@@ -54,7 +54,7 @@ public class QuestManager : MonoBehaviour
     {
         // Add starting quests
         AddQuest(new Quest("Q1P1", 1, QuestType.Loot));
-        AddQuest(new Quest("Q2P1", 5, QuestType.Mine));
+        AddQuest(new Quest("Q2P1", 7, QuestType.Mine));
         AddQuest(new Quest("Q3P1", 3, QuestType.Defeat));
         
     }
