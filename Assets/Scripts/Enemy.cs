@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 1f;
+    public float speed = 0.5f;
     public GameObject PointA;
     public GameObject PointB;
     private Rigidbody2D rb;
@@ -23,12 +23,18 @@ public class Enemy : MonoBehaviour
             MoveTowardsWaypoint();
         }
 
-        if (Vector2.Distance(transform.position, currentPoint.position) < 1f) // Check close enough
-        {
-            StartCoroutine(WaitAtWaypoint()); // Start waiting
-        }
+        
     }
 
+    private void OnTriggerEnter2D(Collider2D borderCollider)
+{
+    if (borderCollider.gameObject.CompareTag("EnemyBorder"))
+    {
+        rb.linearVelocity = Vector2.zero;
+        StartCoroutine(WaitAtWaypoint());
+        
+    }
+}
     void MoveTowardsWaypoint()
     {
         Vector2 direction = currentPoint.position - transform.position;
@@ -36,28 +42,28 @@ public class Enemy : MonoBehaviour
     }
 
     IEnumerator WaitAtWaypoint()
-    {
-        isWaiting = true;
-        yield return new WaitForSeconds(2f); // Wait time (adjust as needed)
-        isWaiting = false;
+{
+    isWaiting = true;
+    yield return new WaitForSeconds(2f);
+    isWaiting = false;
 
-        // Switch waypoints
-        if (currentPoint == PointB.transform)
-        {
-            currentPoint = PointA.transform;
-        }
-        else
-        {
-            currentPoint = PointB.transform;
-        }
+    
+    if (currentPoint == PointB.transform)
+    {
+        currentPoint = PointA.transform;
     }
+    else if (currentPoint == PointA.transform) 
+    {
+        currentPoint = PointB.transform;
+    }
+}
 
     private void OnDrawGizmos()
     {
         if (PointA != null && PointB != null) // Check if points are assigned
         {
-            Gizmos.DrawWireSphere(PointA.transform.position, 0.5f); // Smaller gizmos
-            Gizmos.DrawWireSphere(PointB.transform.position, 0.5f);
+            Gizmos.DrawWireSphere(PointA.transform.position, 1.2f); 
+            Gizmos.DrawWireSphere(PointB.transform.position, 1.2f);
             Gizmos.DrawLine(PointA.transform.position, PointB.transform.position);
         }
     }

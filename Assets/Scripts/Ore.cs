@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 
 public class Ore : MonoBehaviour
 {
@@ -13,10 +14,14 @@ public class Ore : MonoBehaviour
     private Coroutine miningCoroutine;
     private Transform player; // Player reference
     public Inventory inventory;
+    
+    private Tilemap tilemap;
+    
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        tilemap = FindFirstObjectByType<Tilemap>();
     }
 
     public void StartMining()
@@ -30,11 +35,11 @@ public class Ore : MonoBehaviour
 
     private IEnumerator MineOre()
     {
-        float timer = 0f;
+        float timer = 0f; 
 
         while (timer < timeToBreak)
         {
-            if (!Input.GetMouseButton(0) || !CanMineOre()) // Stop if player moves or releases mouse
+            if (!Input.GetMouseButton(0) || !CanMineOre()) 
             {
                 isBeingMined = false;
                 yield break;
@@ -51,8 +56,10 @@ public class Ore : MonoBehaviour
     {
             inventory.AddItem(oreItem, 1);
             QuestManager.instance.UpdateQuestProgress("Q2P1", 1);
-            UIManager.instance.ShowPopup("You mined " + oreName + "!");
-            Destroy(gameObject); 
+            Destroy(gameObject);
+            Vector3Int tilePosition = tilemap.WorldToCell(transform.position); 
+            tilemap.SetTile(tilePosition, null); 
+
     }
 
     private bool CanMineOre()

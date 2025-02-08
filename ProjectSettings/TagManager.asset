@@ -7,6 +7,7 @@ TagManager:
   - Acid
   - Ore
   - Enemy
+  - EnemyBorder
   layers:
   - Default
   - TransparentFX

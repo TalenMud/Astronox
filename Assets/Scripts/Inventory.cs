@@ -17,7 +17,7 @@ public class Inventory : ScriptableObject
                 if (existingItem.itemName == item.itemName)
                 {
                     existingItem.stackCount += item.stackCount; // Stack items together
-                    UIManager.instance.ShowPopup(item.itemName + " added to inventory, you have " + (item.stackCount).ToString());
+                    UIManager.instance.ShowPopup(item.itemIcon);
                     return;
                 }
             }
@@ -26,7 +26,7 @@ public class Inventory : ScriptableObject
         items.Add(item);
         if (item.isTool){
         HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
-        UIManager.instance.ShowPopup(item.itemName + " added to hotbar");
+        UIManager.instance.ShowPopup(item.itemIcon);
         }
     }
 

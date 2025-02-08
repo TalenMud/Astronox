@@ -73,9 +73,9 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    private void OnColliderEnter2D(Collider2D enemyCollider)
+    private void OnCollisionEnter2D(Collision2D enemyCollision)
     {
-        if (enemyCollider.gameObject.CompareTag("Enemy"))
+        if (enemyCollision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage(1);
             if (!isTakingDamage) 
@@ -86,9 +86,9 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void OnColliderExit2D(Collider2D enemyCollider)
+    private void OnCollisionExit2D(Collision2D enemyCollision)
     {
-        if (enemyCollider.gameObject.CompareTag("Enemy"))
+        if (enemyCollision.gameObject.CompareTag("Enemy"))
         {
             isTakingDamage = false;
             if (damageCoroutine != null)

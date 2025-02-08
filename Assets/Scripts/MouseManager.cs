@@ -4,7 +4,6 @@ public class CrosshairManager : MonoBehaviour
 {
     public Texture2D defaultCrosshair;
     public Texture2D enemyCrosshair;
-
     public Texture2D miningCrosshair;
 
     void Start()
@@ -27,6 +26,9 @@ public class CrosshairManager : MonoBehaviour
         else
         {
             Cursor.SetCursor(defaultCrosshair, Vector2.zero, CursorMode.Auto);
+            
         }
     }
+
+
 }

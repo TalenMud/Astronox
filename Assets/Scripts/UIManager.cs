@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    public GameObject popupPanel; // Reference to the UI Panel
-    public TextMeshProUGUI popupText; // Reference to the text component
+    public GameObject popupPanel; 
+    public Image plusIcon;
+    public Image icon; 
 
     private void Awake()
     {
@@ -16,16 +18,21 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    public void ShowPopup(string message)
+    public void ShowPopup(Sprite displayIcon)
     {
-        popupText.text = message; // Set the text
-        popupPanel.SetActive(true); // Show popup
-        StartCoroutine(HidePopupAfterDelay(2f)); // Hide after 2 seconds
+        plusIcon.gameObject.SetActive(true);
+        icon.sprite = displayIcon; 
+        icon.gameObject.SetActive(true);
+        popupPanel.SetActive(true);
+        StartCoroutine(HidePopupAfterDelay(2f)); 
     }
 
     private IEnumerator HidePopupAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        popupPanel.SetActive(false); // Hide the popup
+        plusIcon.gameObject.SetActive(false);
+        popupPanel.SetActive(false);
+        icon.sprite = null;
+        icon.gameObject.SetActive(true);
     }
 }
