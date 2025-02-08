@@ -44,12 +44,12 @@ public class PlayerHealth : MonoBehaviour
     }
     
     
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D hurtingCollider)
     {
-        if (other.gameObject.CompareTag("Acid"))
+        if (hurtingCollider.gameObject.CompareTag("Acid"))
         {
-            TakeDamage(1); // Initial damage
-            if (!isTakingDamage) // Prevent multiple coroutines from stacking
+            TakeDamage(1);
+            if (!isTakingDamage) 
             {
                 isTakingDamage = true;
                 damageCoroutine = StartCoroutine(DamageOverTime());
@@ -57,16 +57,47 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D hurtingCollider)
     {
-        if (other.gameObject.CompareTag("Acid"))
+        if (hurtingCollider.gameObject.CompareTag("Acid"))
         {
             isTakingDamage = false;
             if (damageCoroutine != null)
             {
-                StopCoroutine(damageCoroutine); // Stop damage coroutine
+                StopCoroutine(damageCoroutine); 
                 damageCoroutine = null;
             }
         }
+
+        
+    }
+
+
+    private void OnColliderEnter2D(Collider2D enemyCollider)
+    {
+        if (enemyCollider.gameObject.CompareTag("Enemy"))
+        {
+            TakeDamage(1);
+            if (!isTakingDamage) 
+            {
+                isTakingDamage = true;
+                damageCoroutine = StartCoroutine(DamageOverTime());
+            }
+        }
+    }
+
+    private void OnColliderExit2D(Collider2D enemyCollider)
+    {
+        if (enemyCollider.gameObject.CompareTag("Enemy"))
+        {
+            isTakingDamage = false;
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine); 
+                damageCoroutine = null;
+            }
+        }
+
+        
     }
 }
