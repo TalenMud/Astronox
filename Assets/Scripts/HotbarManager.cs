@@ -59,7 +59,7 @@ public class HotbarManager : MonoBehaviour
         {
             if (i == selectedSlot)
             {
-                hotbarSlots[i].color = new Color(0.5f, 0.5f, 0.5f, 1f); // Highlight selected slot
+                hotbarSlots[i].color = new Color(0.7f, 0.7f, 0.7f, 1f); // Highlight selected slot
                 hotbarSlots[i].transform.localScale = new Vector2(1.2f, 1.2f); // Scale up selected slot
             }
             else
