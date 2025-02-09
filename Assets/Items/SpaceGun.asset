@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24e295b75e9bd258e89ad66f0391df81, type: 3}
-  m_Name: Copper Drill
+  m_Name: SpaceGun
   m_EditorClassIdentifier: 
-  itemName: CopperDrill
-  itemIcon: {fileID: 6815405411228783977, guid: c1d95bb627e34ad42a428408325f50d5, type: 3}
-  description: A basic drill used for mining ores
+  itemName: SpaceGun
+  itemIcon: {fileID: 21300000, guid: b0f7e2bb905a6c6468c75db4043b5ab6, type: 3}
+  description: 
   isTool: 1
-  type: Drill
+  type: Weapon
   isStackable: 0
   stackCount: 1

@@ -36,12 +36,12 @@ public class Inventory : ScriptableObject
         {
             if (item.isStackable && item.stackCount > 1)
             {
-                item.stackCount -= 1; // Decrease stack count instead of removing the item
+                item.stackCount -= 1; 
                 Debug.Log(item.itemName + " stack decremented!");
             }
             else
             {
-                items.Remove(item); // If it's not stackable or stack count is 1, remove the item
+                items.Remove(item); 
                 Debug.Log(item.itemName + " removed from inventory.");
             }
         }
@@ -50,7 +50,7 @@ public class Inventory : ScriptableObject
     {
         foreach (InventoryItem item in items)
         {
-            if (item.itemName == itemName){ // Compare itemName instead of name
+            if (item.itemName == itemName){
                 return true;
             }
         

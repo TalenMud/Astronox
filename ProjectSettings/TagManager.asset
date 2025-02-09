@@ -8,6 +8,9 @@ TagManager:
   - Ore
   - Enemy
   - EnemyBorder
+  - gunLazer
+  - MiningProgress
+  - Rocket
   layers:
   - Default
   - TransparentFX

@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
+
 {
+     
     private float horizontal;
     private float speed = 4f;
     private float jumpingPower = 7f;
-    private bool isFacingRight = true;
+    public bool isFacingRight = true;
     private bool isInWater = false;
     [SerializeField] private LayerMask waterLayer;  // LayerMask to identify water areas
     [SerializeField] private float sinkSpeed = 1f;
@@ -14,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+
+    
     void Update()
     {
 
@@ -81,6 +86,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject.CompareTag("Rocket") && QuestManager.instance.AllQuestsPlanet1Done())
+        {
+              SceneManager.LoadScene("Planet_2");
+        }
         if (waterLayer == (waterLayer | (1 << other.gameObject.layer)))  // Check if the player enters water
         {
             isInWater = true;
@@ -108,6 +117,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 localScale = transform.localScale;
             localScale.x *= -1f;
             transform.localScale = localScale;
+           
         }
     }
 }

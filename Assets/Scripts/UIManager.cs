@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public Animator drillAnimator;
+    public Image miningBar;
+    public Image miningBarBG;
     public static UIManager instance;
     public GameObject popupPanel; 
     public Image plusIcon;
@@ -18,6 +21,23 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+   public void ShowMiningBar()
+{
+    drillAnimator.SetBool("IsMining", true);
+    miningBar.gameObject.SetActive(true);
+    miningBarBG.gameObject.SetActive(true);
+}
+
+public void HideMiningBar()
+{
+    drillAnimator.SetBool("IsMining", false);
+    miningBar.gameObject.SetActive(false);
+    miningBarBG.gameObject.SetActive(false);
+}
+public void UpdateMiningProgress(float progress)
+{
+    miningBar.fillAmount = progress;
+}
     public void ShowPopup(Sprite displayIcon)
     {
         plusIcon.gameObject.SetActive(true);

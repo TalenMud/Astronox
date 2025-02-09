@@ -7,6 +7,7 @@ public class HotbarManager : MonoBehaviour
     public Image[] hotbarSlots; 
     public int selectedSlot = 0; 
     public Image[] hotbarArrows;
+    public Inventory inventory;
 
     private void Awake()
     {
@@ -16,6 +17,21 @@ public class HotbarManager : MonoBehaviour
 
     private void Start()
     {
+        foreach (InventoryItem item in inventory.items)
+        {
+            if (item.isTool)
+            {
+                if (item.itemName == "CopperDrill")
+                {
+                    AssignItemToSlot(item.itemIcon, 0);
+                }
+                if (item.itemName == "SpaceGun")
+                {
+                    AssignItemToSlot(item.itemIcon, 1);
+                }
+            }
+
+        }
         UpdateHotbarUI();
     }
 
@@ -46,7 +62,7 @@ public class HotbarManager : MonoBehaviour
     }
 
     
-    private void SelectSlot(int slotIndex)
+    public void SelectSlot(int slotIndex)
     {
         selectedSlot = slotIndex; 
         UpdateHotbarUI(); 

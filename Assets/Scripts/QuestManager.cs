@@ -55,7 +55,8 @@ public class QuestManager : MonoBehaviour
         // Add starting quests
         AddQuest(new Quest("Q1P1", 1, QuestType.Loot));
         AddQuest(new Quest("Q2P1", 7, QuestType.Mine));
-        AddQuest(new Quest("Q3P1", 3, QuestType.Defeat));
+        AddQuest(new Quest("Q3P1", 1, QuestType.Loot));
+        AddQuest(new Quest("Q4P1", 3, QuestType.Defeat));
         
     }
 
@@ -79,38 +80,67 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+
+public bool AllQuestsPlanet1Done(){
+    List<Quest> p1Quests = activeQuests.FindAll(q => q.questID.Contains("P1"));
+    return p1Quests.TrueForAll(q => q.isCompleted);
+
+}
     private void RefreshQuestUI()
 {
+   
     
     foreach (Transform child in questPanel)
     {
         Destroy(child.gameObject);
     }
 
-   
+    List<Quest> incompleteQuests = new List<Quest>();
+    List<Quest> completedQuests = new List<Quest>();
+
+    
     foreach (Quest quest in activeQuests)
     {
-        
-        GameObject questUI = Instantiate(questUIPrefab, questPanel);
-
-        
-        Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>(); 
-        Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>(); 
-        Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>(); 
-
-        progressBar.fillAmount = quest.portionDone;
-        
-        icon.sprite = GetQuestIcon(quest.questType);
-        checkmark.enabled = quest.isCompleted;
-        
-
-        if (quest.isCompleted && activeQuests.Count > 3)
+        if (quest.isCompleted)
         {
-        Destroy(questUI);
+            completedQuests.Add(quest);
         }
-        
+        else
+        {
+            incompleteQuests.Add(quest);
+        }
+    }
+
+    int maxQuests = Mathf.Min(3, incompleteQuests.Count + completedQuests.Count);
+
+    
+    for (int i = 0; i < Mathf.Min(3, incompleteQuests.Count); i++)
+    {
+        DisplayQuest(incompleteQuests[i]);
+    }
+
+    
+    for (int i = 0; i < maxQuests - incompleteQuests.Count; i++)
+    {
+        DisplayQuest(completedQuests[i]);
     }
 }
+
+private void DisplayQuest(Quest quest)
+{
+    GameObject questUI = Instantiate(questUIPrefab, questPanel);
+
+    Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>();
+    Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>();
+    Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>();
+
+    progressBar.fillAmount = quest.portionDone;
+
+    icon.sprite = GetQuestIcon(quest.questType);
+    checkmark.enabled = quest.isCompleted;
+}
+    
+
 private Sprite GetQuestIcon(QuestType questType)
 {
     switch (questType)

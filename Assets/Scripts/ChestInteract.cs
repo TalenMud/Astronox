@@ -3,11 +3,14 @@ using UnityEngine.UI;
 
 public class ChestInteract : MonoBehaviour
 {
+    public int chosenSlot;
     public InventoryItem loot;
     public SpriteRenderer chestMessage; 
     private bool isInRange = false; 
     private bool isOpened = false; 
     public Inventory inventory;
+
+    public string ChestQuestID;
 
     void Start()
     {
@@ -47,9 +50,9 @@ public class ChestInteract : MonoBehaviour
     {
         isOpened = true; 
         chestMessage.enabled = false;
-        QuestManager.instance.UpdateQuestProgress("Q1P1", 1);
+        QuestManager.instance.UpdateQuestProgress(ChestQuestID, 1);
         
-        inventory.AddItem(loot, 0);
+        inventory.AddItem(loot, chosenSlot);
         
     }
 

@@ -3,17 +3,22 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
+    public int startinghealth = 4;
+    private int enemyHealth;
     public float speed = 0.5f;
     public GameObject PointA;
     public GameObject PointB;
     private Rigidbody2D rb;
     private Transform currentPoint;
+    public string EnemyQuestID;
+    public int rewardPoints;
     private bool isWaiting = false; // Add waiting flag
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentPoint = PointB.transform;
+        enemyHealth = startinghealth;
     }
 
     void Update()
@@ -32,6 +37,17 @@ public class Enemy : MonoBehaviour
     {
         rb.linearVelocity = Vector2.zero;
         StartCoroutine(WaitAtWaypoint());
+        
+    }
+
+    if (borderCollider.gameObject.CompareTag("gunLazer"))
+    {
+        enemyHealth -= 1;
+        if (enemyHealth <= 0) 
+        {
+            QuestManager.instance.UpdateQuestProgress(EnemyQuestID, rewardPoints);
+            Destroy(gameObject);
+        }
         
     }
 }
