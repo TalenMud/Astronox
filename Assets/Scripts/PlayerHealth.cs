@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -9,7 +11,8 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth;
     private bool isTakingDamage = false;
     private Coroutine damageCoroutine;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private HashSet<Collider2D> touchingAcid = new HashSet<Collider2D>();
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -17,21 +20,26 @@ public class PlayerHealth : MonoBehaviour
     
     private IEnumerator DamageOverTime()
     {
-        while (isTakingDamage)
+        while (touchingAcid.Count > 0) 
         {
-            yield return new WaitForSeconds(1f); // Damage every 2 seconds
+            yield return new WaitForSeconds(1f);
             TakeDamage(1);
         }
+        isTakingDamage = false; 
+        damageCoroutine = null;  
     }
+    
 
 
-    void TakeDamage(int amount){
+    void TakeDamage(int amount)
+    {
         currentHealth -= amount;
 
-        if(currentHealth <= 0){
-         // death screen ...
+        if(currentHealth <= 0)
+        {
+         SceneManager.LoadScene("DeathScreen");
         }
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -48,12 +56,15 @@ public class PlayerHealth : MonoBehaviour
     {
         if (hurtingCollider.gameObject.CompareTag("Acid"))
         {
-            TakeDamage(1);
-            if (!isTakingDamage) 
+            
+            touchingAcid.Add(hurtingCollider); 
+
+            if (!isTakingDamage)
             {
                 isTakingDamage = true;
                 damageCoroutine = StartCoroutine(DamageOverTime());
             }
+        
         }
     }
 
@@ -61,11 +72,11 @@ public class PlayerHealth : MonoBehaviour
     {
         if (hurtingCollider.gameObject.CompareTag("Acid"))
         {
-            isTakingDamage = false;
-            if (damageCoroutine != null)
+            touchingAcid.Remove(hurtingCollider); 
+
+            if (touchingAcid.Count == 0 && damageCoroutine != null) 
             {
-                StopCoroutine(damageCoroutine); 
-                damageCoroutine = null;
+                StopCoroutine(damageCoroutine);
             }
         }
 

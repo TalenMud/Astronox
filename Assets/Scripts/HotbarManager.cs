@@ -80,7 +80,7 @@ public class HotbarManager : MonoBehaviour
             }
             else
             {   hotbarArrows[i].enabled = false;
-                hotbarSlots[i].color = Color.white; 
+                hotbarSlots[i].color = new Color(1f, 1f, 1f, 1f); 
                 hotbarSlots[i].transform.localScale = Vector2.one; 
             }
         }

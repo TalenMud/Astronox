@@ -37,12 +37,10 @@ public class Inventory : ScriptableObject
             if (item.isStackable && item.stackCount > 1)
             {
                 item.stackCount -= 1; 
-                Debug.Log(item.itemName + " stack decremented!");
             }
             else
             {
                 items.Remove(item); 
-                Debug.Log(item.itemName + " removed from inventory.");
             }
         }
     }

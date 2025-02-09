@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Copper Ore
   m_EditorClassIdentifier: 
   itemName: Copper Ore
-  itemIcon: {fileID: 890794788751841283, guid: c2e3ef54f2bdf5845a1e15a25ece5f7a, type: 3}
+  itemIcon: {fileID: 5943319570719813723, guid: 6bd359866e9b6d74cad1cbffc838a251, type: 3}
   description: A basic crafting material
   isTool: 0
   type: Ore
+  isStackable: 1
+  stackCount: 1
