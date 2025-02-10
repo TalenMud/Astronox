@@ -105,11 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chosenSlot: 0
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
   loot: {fileID: 0}
-=======
-  loot: {fileID: 11400000, guid: a63ccbd429f392d41977af2a6c807513, type: 2}
->>>>>>> Stashed changes
 =======
   loot: {fileID: 11400000, guid: a63ccbd429f392d41977af2a6c807513, type: 2}
 >>>>>>> Stashed changes
