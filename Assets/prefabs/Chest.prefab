@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8133255549570502466}
   - component: {fileID: 985160066843935274}
   - component: {fileID: 9147467913516703961}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff70c4c6ba02a5479cc0282301b757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chosenSlot: 0
   loot: {fileID: 0}
   chestMessage: {fileID: 3071865512774179677}
   inventory: {fileID: 11400000, guid: f62ec790d855b5ad5a9598f19f3a1f93, type: 2}

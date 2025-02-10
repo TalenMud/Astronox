@@ -186,7 +186,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      CopperOreIcon-1.png_0: 5943319570719813723
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

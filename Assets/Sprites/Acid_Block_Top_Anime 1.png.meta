@@ -236,7 +236,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Acid_Block_Top_Anime 1_0: -9216673722176329318
+      Acid_Block_Top_Anime 1_1: -6693779383526993046
+      Acid_Block_Top_Anime 1_2: 3022842301257450227
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
