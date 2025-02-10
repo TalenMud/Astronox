@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class QuestManager : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class QuestManager : MonoBehaviour
     
 
        
-        if (activeQuests.Count == 0)
+        if (activeQuests.Count == 0 && SceneManager.GetActiveScene().name == "Planet_1")
         {
             InitializeQuests();
         }
@@ -64,8 +65,6 @@ public class QuestManager : MonoBehaviour
     {
         activeQuests.Add(quest);
         SaveQuests();
-        RefreshQuestUI();
-        Canvas.ForceUpdateCanvases();
     }
 
     public void UpdateQuestProgress(string questID, int progress)
@@ -76,7 +75,7 @@ public class QuestManager : MonoBehaviour
             quest.UpdateProgress(progress);
             SaveQuests();
             RefreshQuestUI();
-            Canvas.ForceUpdateCanvases();
+  
         }
     }
 
@@ -111,10 +110,10 @@ public bool AllQuestsPlanet1Done(){
         }
     }
 
-    int maxQuests = Mathf.Min(3, incompleteQuests.Count + completedQuests.Count);
+    int maxQuests = Mathf.Min(1, incompleteQuests.Count + completedQuests.Count);
 
     
-    for (int i = 0; i < Mathf.Min(3, incompleteQuests.Count); i++)
+    for (int i = 0; i < Mathf.Min(1, incompleteQuests.Count); i++)
     {
         DisplayQuest(incompleteQuests[i]);
     }
@@ -133,11 +132,22 @@ private void DisplayQuest(Quest quest)
     Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>();
     Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>();
     Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>();
-
-    progressBar.fillAmount = quest.portionDone;
-
     icon.sprite = GetQuestIcon(quest.questType);
     checkmark.enabled = quest.isCompleted;
+    progressBar.fillAmount = quest.portionDone;
+
+    questUI.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f); 
+    LeanTween.scale(questUI, new Vector3(1.7f, 1.7f, 1.7f), 3f).setEase(LeanTweenType.easeOutBack); 
+
+    if (quest.isCompleted)
+    {
+        LeanTween.scale(questUI, Vector3.zero, 1.5f);
+            Destroy(questUI);
+            RefreshQuestUI(); 
+
+    }
+    LeanTween.scale(questUI, Vector3.zero, 1.5f);
+
 }
     
 
