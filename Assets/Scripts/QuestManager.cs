@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Lean.Tween;
 
 public class QuestManager : MonoBehaviour
 {
@@ -10,7 +9,8 @@ public class QuestManager : MonoBehaviour
 
     public static QuestManager instance;
     
-    
+
+    public LTRect QuestRect;
    public Sprite mineIcon;
    public Sprite discoverIcon;
    public Sprite defeatIcon;
@@ -21,7 +21,8 @@ public class QuestManager : MonoBehaviour
    public List<Quest> activeQuests = new List<Quest>();
 
     public GameObject questUIPrefab; 
-    public Transform questPanel; 
+    public Transform questTab; 
+    public GameObject questTabObj;
 
     private void Awake()
     {
@@ -43,7 +44,7 @@ public class QuestManager : MonoBehaviour
     
 
        
-        if (activeQuests.Count == 0 && SceneManager.GetActiveScene().name == "Planet_1")
+        if (activeQuests.Count == 0)
         {
             InitializeQuests();
         }
@@ -54,7 +55,6 @@ public class QuestManager : MonoBehaviour
 
     public void InitializeQuests()
     {
-        // Add starting quests
         AddQuest(new Quest("Q1P1", 1, QuestType.Loot));
         AddQuest(new Quest("Q2P1", 7, QuestType.Mine));
         AddQuest(new Quest("Q3P1", 1, QuestType.Loot));
@@ -74,6 +74,14 @@ public class QuestManager : MonoBehaviour
         if (quest != null)
         {
             quest.UpdateProgress(progress);
+            if (quest.isCompleted)
+            {
+                foreach (Transform child in questTab)
+                {
+                        Destroy(child.gameObject);
+                }
+                DisplayQuest(quest);
+            }
             SaveQuests();
             RefreshQuestUI();
   
@@ -88,67 +96,42 @@ public bool AllQuestsPlanet1Done(){
 }
     private void RefreshQuestUI()
 {
-   
-    
-    foreach (Transform child in questPanel)
+    foreach (Transform child in questTab)
     {
         Destroy(child.gameObject);
     }
 
-    List<Quest> incompleteQuests = new List<Quest>();
-    List<Quest> completedQuests = new List<Quest>();
-
-    
-    foreach (Quest quest in activeQuests)
+    Quest questToDisplay = null;
+    if (activeQuests.Count > 0)
     {
-        if (quest.isCompleted)
+        questToDisplay = activeQuests.Find(q => !q.isCompleted);
+        if (questToDisplay == null)
         {
-            completedQuests.Add(quest);
-        }
-        else
-        {
-            incompleteQuests.Add(quest);
+            questToDisplay = activeQuests.Find(q => q.isCompleted);
         }
     }
 
-    int maxQuests = Mathf.Min(1, incompleteQuests.Count + completedQuests.Count);
-
-    
-    for (int i = 0; i < Mathf.Min(1, incompleteQuests.Count); i++)
+    if (questToDisplay != null)
     {
-        DisplayQuest(incompleteQuests[i]);
-    }
-
-    
-    for (int i = 0; i < maxQuests - incompleteQuests.Count; i++)
-    {
-        DisplayQuest(completedQuests[i]);
+        DisplayQuest(questToDisplay);
     }
 }
 
 private void DisplayQuest(Quest quest)
 {
-    GameObject questUI = Instantiate(questUIPrefab, questPanel);
+    questTabObj.SetActive(true);
+
+    GameObject questUI = Instantiate(questUIPrefab, questTab);
+    QuestUI questUIComponent = questUI.GetComponent<QuestUI>();
+    
 
     Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>();
     Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>();
     Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>();
     icon.sprite = GetQuestIcon(quest.questType);
+    questUIComponent.ShowQuest(quest.portionDone);
     checkmark.enabled = quest.isCompleted;
-    progressBar.fillAmount = quest.portionDone;
-
-    questUI.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f); 
-    LeanTween.scale(questUI, new Vector3(1.7f, 1.7f, 1.7f), 3f).setEase(LeanTweenType.easeOutBack); 
-
-    if (quest.isCompleted)
-    {
-        LeanTween.scale(questUI, Vector3.zero, 1.5f);
-            Destroy(questUI);
-            RefreshQuestUI(); 
-
-    }
-    LeanTween.scale(questUI, Vector3.zero, 1.5f);
-
+    
 }
     
 

@@ -16,7 +16,7 @@ public class Inventory : ScriptableObject
             {
                 if (existingItem.itemName == item.itemName)
                 {
-                    existingItem.stackCount += item.stackCount; // Stack items together
+                    existingItem.stackCount += item.stackCount; 
                     UIManager.instance.ShowPopup(item.itemIcon);
                     return;
                 }
