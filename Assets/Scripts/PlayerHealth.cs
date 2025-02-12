@@ -72,11 +72,13 @@ public class PlayerHealth : MonoBehaviour
     {
         if (hurtingCollider.gameObject.CompareTag("Acid"))
         {
-            touchingAcid.Remove(hurtingCollider); 
+           touchingAcid.Remove(hurtingCollider);
 
             if (touchingAcid.Count == 0 && damageCoroutine != null) 
             {
                 StopCoroutine(damageCoroutine);
+                damageCoroutine = null;
+                isTakingDamage = false;
             }
         }
 

@@ -9,25 +9,36 @@ public class Inventory : ScriptableObject
 
     public void AddItem(InventoryItem item, int slot)
     {
-        if (item.isStackable)
+    if (item.isStackable)
+    {
+        bool stacked = false;
+
+        foreach (InventoryItem existingItem in items)
         {
-            
-            foreach (InventoryItem existingItem in items)
+            if (existingItem.itemName == item.itemName)
             {
-                if (existingItem.itemName == item.itemName)
-                {
-                    existingItem.stackCount += item.stackCount; 
-                    UIManager.instance.ShowPopup(item.itemIcon);
-                    return;
-                }
+                existingItem.stackCount += item.stackCount;
+                UIManager.instance.ShowPopup(item.itemIcon);
+                stacked = true; 
+                break; 
             }
-            
         }
+
+        if (!stacked) 
+        {
+            items.Add(item);
+        }
+    }
+    else 
+    {
         items.Add(item);
-        if (item.isTool){
+    }
+
+    if (item.isTool)
+    {
         HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
         UIManager.instance.ShowPopup(item.itemIcon);
-        }
+    }
     }
 
     public void RemoveItem(InventoryItem item)
@@ -54,6 +65,23 @@ public class Inventory : ScriptableObject
         
         }
         return false;
+    }
+
+    public int FindQuantityOfItem(string itemName)
+    {
+        int quantity = 0;
+        foreach (InventoryItem item in items)
+        {
+            if (item.itemName == itemName)
+            {
+                quantity += item.stackCount; 
+                if(!item.isStackable){
+                    quantity++; 
+                }
+
+            }
+        }
+        return quantity;
     }
 
 }

@@ -61,6 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e76b48d071e4d5eeaa834ef738ea9245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  questPanel: {fileID: 0}
+  progressBar: {fileID: 0}
 --- !u!1 &5378755350925886792
 GameObject:
   m_ObjectHideFlags: 0

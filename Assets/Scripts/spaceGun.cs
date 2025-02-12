@@ -3,7 +3,7 @@ using System.Collections;
 
 public class spaceGun : MonoBehaviour
 {
-    public HotbarManager hotbarManager;
+    public Transform firePoint;
     public PlayerMovement playerMovement;
     public GameObject laserBeamPrefab;
     public float laserBeamSpeed = 10f;
@@ -19,6 +19,16 @@ public class spaceGun : MonoBehaviour
     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     Vector2 direction = mousePosition - gunPivot.position;
     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+
+    if (angle > 90 || angle < -55)
+    {
+        spriteRenderer.flipY = true;
+    }
+    else
+    {
+        spriteRenderer.flipY = false;
+    }
 
     
     float limitedAngle = Mathf.Clamp(angle, -rotationLimit, rotationLimit); 
@@ -40,20 +50,15 @@ public IEnumerator startFiring(GameObject lazer)
 }
     private void FireLaser()
     {
-        
-    GameObject laserBeam = Instantiate(laserBeamPrefab, transform.position, transform.rotation);
+    Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    Vector2 fireDirection = mousePosition - firePoint.position;
+
+    
+    GameObject laserBeam = Instantiate(laserBeamPrefab, firePoint.position, firePoint.rotation);
     Rigidbody2D rb = laserBeam.GetComponent<Rigidbody2D>();
 
-    if (!playerMovement.isFacingRight)
-    {
-        rb.linearVelocity = -transform.right * laserBeamSpeed; // Fire left
-    }
-    else
-    {
-        rb.linearVelocity = transform.right * laserBeamSpeed; // Fire right
-    }
+    rb.linearVelocity = fireDirection.normalized * laserBeamSpeed;
 
     StartCoroutine(startFiring(laserBeam));
-
     }
 }

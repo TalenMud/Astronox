@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -68,24 +69,28 @@ public class QuestManager : MonoBehaviour
         SaveQuests();
     }
 
+     private HashSet<string> completedAndShownQuests = new HashSet<string>(); 
+
+
     public void UpdateQuestProgress(string questID, int progress)
     {
-        Quest quest = activeQuests.Find(q => q.questID == questID);
-        if (quest != null)
-        {
+        Debug.Log("UpdateQuestProgress called for questID: " + questID);
+       Quest quest = activeQuests.Find(q => q.questID == questID);
+            bool wasCompleted = quest.isCompleted; 
             quest.UpdateProgress(progress);
-            if (quest.isCompleted)
+
+            if (quest.isCompleted && !wasCompleted)
             {
-                foreach (Transform child in questTab)
-                {
-                        Destroy(child.gameObject);
-                }
-                DisplayQuest(quest);
+                completedAndShownQuests.Add(questID);
+                RefreshQuestUI();
+                DisplayQuest(quest); 
             }
-            SaveQuests();
-            RefreshQuestUI();
-  
-        }
+    else if (!quest.isCompleted)
+    {
+        SaveQuests();
+        RefreshQuestUI();
+        DisplayQuest(quest);
+    }
     }
 
 
@@ -96,25 +101,22 @@ public bool AllQuestsPlanet1Done(){
 }
     private void RefreshQuestUI()
 {
+    Debug.Log("RefreshQuestUI called.");
+
+    
     foreach (Transform child in questTab)
     {
         Destroy(child.gameObject);
     }
 
-    Quest questToDisplay = null;
-    if (activeQuests.Count > 0)
-    {
-        questToDisplay = activeQuests.Find(q => !q.isCompleted);
-        if (questToDisplay == null)
-        {
-            questToDisplay = activeQuests.Find(q => q.isCompleted);
-        }
-    }
+    questTabObj.SetActive(false); 
+}
 
-    if (questToDisplay != null)
-    {
-        DisplayQuest(questToDisplay);
-    }
+private IEnumerator DelayedRefresh()
+{
+    yield return new WaitForSeconds(7f);
+    RefreshQuestUI();
+    SaveQuests();
 }
 
 private void DisplayQuest(Quest quest)
@@ -123,19 +125,24 @@ private void DisplayQuest(Quest quest)
 
     GameObject questUI = Instantiate(questUIPrefab, questTab);
     QuestUI questUIComponent = questUI.GetComponent<QuestUI>();
-    
+    questUIComponent.ShowQuest(quest);
+    completedAndShownQuests.Add(quest.questID);
+    StartCoroutine(Wait(questTabObj));
 
-    Image icon = questUI.transform.Find("QuestIcon").GetComponent<Image>();
-    Image progressBar = questUI.transform.Find("CompletionLevel").GetComponent<Image>();
-    Image checkmark = questUI.transform.Find("Done_image").GetComponent<Image>();
-    icon.sprite = GetQuestIcon(quest.questType);
-    questUIComponent.ShowQuest(quest.portionDone);
-    checkmark.enabled = quest.isCompleted;
+
+    
     
 }
-    
 
-private Sprite GetQuestIcon(QuestType questType)
+IEnumerator Wait(GameObject ThingToHide)
+    {
+        
+        yield return new WaitForSeconds(2f);
+
+        ThingToHide.SetActive(false);
+    }
+
+public Sprite GetQuestIcon(QuestType questType)
 {
     switch (questType)
     {

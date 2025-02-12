@@ -11,6 +11,7 @@ TagManager:
   - gunLazer
   - MiningProgress
   - Rocket
+  - QuestPanel
   layers:
   - Default
   - TransparentFX
