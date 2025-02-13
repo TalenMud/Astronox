@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class useForge : MonoBehaviour
 {
     private bool isInRange = false; 
-    private bool isOpened = false; 
     public SpriteRenderer forgeMessage; 
     public Inventory inventory;
     public InventoryItem launchpad;
@@ -17,7 +16,7 @@ public class useForge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInRange && Input.GetKeyDown(KeyCode.E) && isOpened == false && inventory.FindQuantityOfItem("Copper Ore") == 7)
+        if (isInRange && Input.GetKeyDown(KeyCode.E) && inventory.FindQuantityOfItem("Copper Ore") == 7)
         {
             Forge();
         }
@@ -42,7 +41,7 @@ public class useForge : MonoBehaviour
 
     void Forge()
     {
-        isOpened = true; 
+        Debug.Log("forging");
         forgeMessage.enabled = false;
         QuestManager.instance.UpdateQuestProgress(ForgeQuestID, 1);
         

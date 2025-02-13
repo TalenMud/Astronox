@@ -18,12 +18,15 @@ public class QuestManager : MonoBehaviour
    public Sprite collectIcon;
    public Sprite lootIcon;
    public Sprite chestIcon;
+   public Sprite forgeIcon;
 
    public List<Quest> activeQuests = new List<Quest>();
 
     public GameObject questUIPrefab; 
     public Transform questTab; 
     public GameObject questTabObj;
+    public bool coolingDown = false;
+    public float cooldown;
 
     private void Awake()
     {
@@ -60,6 +63,7 @@ public class QuestManager : MonoBehaviour
         AddQuest(new Quest("Q2P1", 7, QuestType.Mine));
         AddQuest(new Quest("Q3P1", 1, QuestType.Loot));
         AddQuest(new Quest("Q4P1", 3, QuestType.Defeat));
+        AddQuest(new Quest("Q5P1", 1, QuestType.Forge));
         
     }
 
@@ -101,7 +105,6 @@ public bool AllQuestsPlanet1Done(){
 }
     private void RefreshQuestUI()
 {
-    Debug.Log("RefreshQuestUI called.");
 
     
     foreach (Transform child in questTab)
@@ -114,9 +117,7 @@ public bool AllQuestsPlanet1Done(){
 
 private IEnumerator DelayedRefresh()
 {
-    yield return new WaitForSeconds(7f);
-    RefreshQuestUI();
-    SaveQuests();
+    yield return new WaitForSeconds(cooldown);
 }
 
 private void DisplayQuest(Quest quest)
@@ -128,6 +129,7 @@ private void DisplayQuest(Quest quest)
     questUIComponent.ShowQuest(quest);
     completedAndShownQuests.Add(quest.questID);
     StartCoroutine(Wait(questTabObj));
+    coolingDown = true;
 
 
     
@@ -151,6 +153,7 @@ public Sprite GetQuestIcon(QuestType questType)
         case QuestType.Discover: return chestIcon;
         case QuestType.Mine: return mineIcon;  
         case QuestType.Loot: return lootIcon;
+        case QuestType.Forge: return forgeIcon;
         default: return null;
     }
 }

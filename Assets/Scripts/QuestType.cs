@@ -4,5 +4,6 @@ public enum QuestType
     Collect,   
     Defeat,    
     Discover,
-    Loot   
+    Loot, 
+    Forge  
 }

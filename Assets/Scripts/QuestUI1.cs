@@ -35,7 +35,6 @@ public class QuestUI : MonoBehaviour
 
                         }
                         DOVirtual.DelayedCall(2.5f, () => {
-                            QuestUI.killAll();
                             Destroy(gameObject);
                         });
                     });
