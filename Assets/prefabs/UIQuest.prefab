@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2917745706599460030}
   - component: {fileID: 5853633948966320495}
-  - component: {fileID: -1084887601963841191}
+  - component: {fileID: 6835960453231062154}
   m_Layer: 5
   m_Name: UIQuest
   m_TagString: Untagged
@@ -49,7 +49,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4103191344448794575}
   m_CullTransparentMesh: 1
---- !u!114 &-1084887601963841191
+--- !u!114 &6835960453231062154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,11 +58,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4103191344448794575}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e76b48d071e4d5eeaa834ef738ea9245, type: 3}
+  m_Script: {fileID: 11500000, guid: d5708962f6ccee061be27e0e7b1b13ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   questPanel: {fileID: 0}
-  progressBar: {fileID: 0}
+  progressBar: {fileID: 5958762457711299360}
 --- !u!1 &5378755350925886792
 GameObject:
   m_ObjectHideFlags: 0
