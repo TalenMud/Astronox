@@ -16,7 +16,7 @@ public class useForge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isInRange && Input.GetKeyDown(KeyCode.E) && inventory.FindQuantityOfItem("Copper Ore") == 7)
+        if (isInRange && Input.GetKeyDown(KeyCode.E) && inventory.FindQuantityOfItem("Copper Ore") >= 7)
         {
             Forge();
         }

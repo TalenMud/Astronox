@@ -7,8 +7,8 @@ public class Inventory : ScriptableObject
     public List<InventoryItem> items = new List<InventoryItem>();
 
 
-    public void AddItem(InventoryItem item, int slot)
-    {
+   public void AddItem(InventoryItem item, int slot)
+{
     if (item.isStackable)
     {
         bool stacked = false;
@@ -19,17 +19,17 @@ public class Inventory : ScriptableObject
             {
                 existingItem.stackCount += item.stackCount;
                 UIManager.instance.ShowPopup(item.itemIcon);
-                stacked = true; 
-                break; 
+                stacked = true;
+                break;
             }
         }
 
-        if (!stacked) 
+        if (!stacked)
         {
             items.Add(item);
         }
     }
-    else 
+    else
     {
         items.Add(item);
     }
@@ -39,7 +39,7 @@ public class Inventory : ScriptableObject
         HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
         UIManager.instance.ShowPopup(item.itemIcon);
     }
-    }
+}
 
     public void RemoveItem(InventoryItem item)
     {

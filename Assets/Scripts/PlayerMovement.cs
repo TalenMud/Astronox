@@ -21,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        if (transform.position.y < -24){
+            SceneManager.LoadScene("DeathScreen");
+        }
+
 
         horizontal = Input.GetAxisRaw("Horizontal");
 
