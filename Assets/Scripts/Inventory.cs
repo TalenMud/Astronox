@@ -17,8 +17,8 @@ public class Inventory : ScriptableObject
         {
             if (existingItem.itemName == item.itemName)
             {
-                existingItem.stackCount += item.stackCount;
-                UIManager.instance.ShowPopup(item.itemIcon);
+                existingItem.stackCount++; // Changed from += item.stackCount
+                UIManager.instance.ShowPopup(true, item.itemIcon);
                 stacked = true;
                 break;
             }
@@ -26,6 +26,7 @@ public class Inventory : ScriptableObject
 
         if (!stacked)
         {
+            item.stackCount = 1; // Initialize stack count to 1 for new items
             items.Add(item);
         }
     }
@@ -35,10 +36,10 @@ public class Inventory : ScriptableObject
     }
 
     if (item.isTool)
-    {
-        HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
-        UIManager.instance.ShowPopup(item.itemIcon);
-    }
+{
+    HotbarManager.instance.AssignItemToSlot(item.itemIcon, slot);
+    UIManager.instance.ShowPopup(true, item.itemIcon);
+}
 }
 
     public void RemoveItem(InventoryItem item)

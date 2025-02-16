@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
     public GameObject popupPanel; 
     public Image plusIcon;
     public Image icon; 
+    public Image crossIcon;
+    
 
     private void Awake()
     {
@@ -38,9 +40,18 @@ public void UpdateMiningProgress(float progress)
 {
     miningBar.fillAmount = progress;
 }
-    public void ShowPopup(Sprite displayIcon)
+    public void ShowPopup( bool isPlus, Sprite displayIcon)
     {
-        plusIcon.gameObject.SetActive(true);
+        if (isPlus)
+        {
+            plusIcon.gameObject.SetActive(true);
+            crossIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            plusIcon.gameObject.SetActive(false);
+            crossIcon.gameObject.SetActive(true);
+        }
         icon.sprite = displayIcon; 
         icon.gameObject.SetActive(true);
         popupPanel.SetActive(true);

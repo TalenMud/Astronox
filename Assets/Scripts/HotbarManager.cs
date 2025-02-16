@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class HotbarManager : MonoBehaviour
 {
     public static HotbarManager instance; 
+    public static bool isRocketLeaving = false;
     public Image[] hotbarSlots; 
     public int selectedSlot = 0; 
     public Image[] hotbarArrows;
@@ -43,6 +44,8 @@ public class HotbarManager : MonoBehaviour
     
     private void HandleInput()
     {
+        if (isRocketLeaving) return; 
+
         for (int i = 0; i < hotbarSlots.Length; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i)) 

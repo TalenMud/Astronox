@@ -18,4 +18,4 @@ MonoBehaviour:
   isTool: 0
   type: Ore
   isStackable: 1
-  stackCount: 0
+  stackCount: 7

@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 
 {
-     
+     private float lastMineTime = 0f;
+     private float mineCooldown = 0.5f;
     private float horizontal;
     private float speed = 4f;
     private float jumpingPower = 7f;
@@ -21,9 +22,6 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-        if (transform.position.y < -24){
-            SceneManager.LoadScene("DeathScreen");
-        }
 
 
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -46,30 +44,33 @@ public class PlayerMovement : MonoBehaviour
     }
     }
 
-    void TryMineOre()
+        void TryMineOre()
     {
-        // Get the mouse position in screen space
+        if (Time.time - lastMineTime < mineCooldown)
+        {
+            return;
+        }
+        
         Vector2 mousePosition = Input.mousePosition;
 
-        // Convert the mouse position from screen space to world space
+        
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        // Cast a ray from the mouse position to the world
+        
         RaycastHit2D hit = Physics2D.Raycast(worldPosition, Vector2.zero);
 
-        // If we hit something, check if it's an ore
+        
         if (hit.collider != null && hit.collider.CompareTag("Ore"))
         {
             Ore ore = hit.collider.GetComponent<Ore>();
             if (ore != null)
             {
-                ore.StartMining();  // Start mining the ore if the conditions are met
+                ore.StartMining();  
             }
         }
 
-        // Visualize the ray for debugging purposes (optional)
-        Debug.DrawRay(worldPosition, Vector2.zero, Color.red, 0.1f);
     }
+
     private void FixedUpdate()
     {
         rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
@@ -90,10 +91,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Rocket") && QuestManager.instance.AllQuestsPlanet1Done())
-        {
-              SceneManager.LoadScene("Planet_2");
-        }
         if (waterLayer == (waterLayer | (1 << other.gameObject.layer)))  // Check if the player enters water
         {
             isInWater = true;

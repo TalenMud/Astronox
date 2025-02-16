@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class Ore : MonoBehaviour
 {
-    
+    private static bool isAnyOreMining = false; 
+    private float lastMiningTime = 0f;
+    private float miningCooldown = 1f;
     public InventoryItem oreItem; 
     public string oreName = "Copper Ore";
     public float timeToBreak = 1.5f; 
@@ -16,20 +18,23 @@ public class Ore : MonoBehaviour
     private Transform player; 
     public Inventory inventory;
     
-    private Tilemap tilemap;
-    
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        tilemap = FindFirstObjectByType<Tilemap>();
     }
 
 
     public void StartMining()
     {
+        if (Time.time - lastMiningTime < miningCooldown || isAnyOreMining)
+        {
+            return;
+        }
+
         if (CanMineOre() && !isBeingMined)
         {
+            isAnyOreMining = true;
             isBeingMined = true;
             miningCoroutine = StartCoroutine(MineOre());
             UIManager.instance.ShowMiningBar();
@@ -38,21 +43,23 @@ public class Ore : MonoBehaviour
 
     private IEnumerator MineOre()
     {
-        float timer = 0f; 
+        float timer = 0f;
 
         while (timer < timeToBreak)
         {
-            if (!Input.GetMouseButton(0) || !CanMineOre()) 
+            if (!Input.GetMouseButton(0) || !CanMineOre())
             {
                 isBeingMined = false;
+                isAnyOreMining = false;
                 UIManager.instance.HideMiningBar();
+                miningCoroutine = null;
                 yield break;
             }
 
             timer += Time.deltaTime;
-            yield return null;
-            float progress = timer / timeToBreak; 
+            float progress = timer / timeToBreak;
             UIManager.instance.UpdateMiningProgress(progress);
+            yield return null;
         }
 
         BreakOre();
@@ -60,13 +67,12 @@ public class Ore : MonoBehaviour
 
     private void BreakOre()
     {
-            inventory.AddItem(oreItem, 1);
-            QuestManager.instance.UpdateQuestProgress("Q2P1", 1);
-            Destroy(gameObject);
-            Vector3Int tilePosition = tilemap.WorldToCell(transform.position); 
-            tilemap.SetTile(tilePosition, null);
-            UIManager.instance.HideMiningBar();
-
+        lastMiningTime = Time.time;
+        inventory.AddItem(oreItem, 1);
+        QuestManager.instance.UpdateQuestProgress("Q2P1", 1);
+        isAnyOreMining = false;
+        Destroy(gameObject);
+        UIManager.instance.HideMiningBar();
     }
 
     private bool CanMineOre()
@@ -77,5 +83,14 @@ public class Ore : MonoBehaviour
         bool hasDrillEquipped = HotbarManager.instance.selectedSlot == 0 && inventory.CheckIfHasItem("CopperDrill"); 
 
         return isCloseEnough && hasDrillEquipped;
+    }
+
+    private void OnDestroy()
+    {
+        if (miningCoroutine != null)
+        {
+            StopCoroutine(miningCoroutine);
+            UIManager.instance.HideMiningBar();
+        }
     }
 }

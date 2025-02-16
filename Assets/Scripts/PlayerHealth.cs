@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public float maxHealth = 5;
+    public float maxHealth = 10;
     public Image healthBar;
     public float currentHealth;
     private bool isTakingDamage = false;
@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
     {
         while (touchingAcid.Count > 0) 
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.25f);
             TakeDamage(1);
         }
         isTakingDamage = false; 

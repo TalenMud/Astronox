@@ -9,6 +9,8 @@ public class spaceGun : MonoBehaviour
     public float laserBeamSpeed = 10f;
     public float laserBeamRange = 100f;
     public float rotationLimit = 15f;
+    private float lastFireTime = 0f;
+    private float fireCooldown = 0.5f;
     public Transform gunPivot;
 
     public SpriteRenderer spriteRenderer;
@@ -37,7 +39,10 @@ public class spaceGun : MonoBehaviour
 
     if (Input.GetButtonDown("Fire1"))
     {
-        FireLaser();
+        if (Time.time - lastFireTime >= fireCooldown){
+            FireLaser();
+            lastFireTime = Time.time;
+        }
     }
 
     }

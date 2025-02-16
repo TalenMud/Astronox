@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 510498126231639539}
   - component: {fileID: 1151022402775268265}
-  - component: {fileID: 5758581498425845471}
   - component: {fileID: 789731444650897556}
   - component: {fileID: 2775305252016916991}
+  - component: {fileID: 9220711781346350262}
   m_Layer: 0
   m_Name: Sewpop
   m_TagString: Enemy
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 66.744, y: -5.554, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -78,9 +78,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: -3483574656620730349, guid: 8054c6c25d5e9fd55a3f3272b0bcd676, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -90,8 +90,57 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5758581498425845471
-BoxCollider2D:
+--- !u!50 &789731444650897556
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599484998697662102}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 2
+--- !u!114 &2775305252016916991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599484998697662102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac28a84edc8ca4d7aec6c26a36e0837, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startinghealth: 5
+  speed: 2
+  chaseSpeed: 4
+  detectionRange: 5
+  PointA: {fileID: 0}
+  PointB: {fileID: 0}
+  EnemyQuestID: Q4P1
+  rewardPoints: 1
+  maxHealth: 5
+  healthBarPrefab: {fileID: 7703358275152344772, guid: eca642efeea17ab4ca052f711f7511f9, type: 3}
+--- !u!60 &9220711781346350262
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,7 +149,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: d53fe5865f42d494993ad556cc9c7b45, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -128,56 +177,30 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.734375, y: 0.625}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!50 &789731444650897556
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599484998697662102}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 1
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &2775305252016916991
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599484998697662102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dac28a84edc8ca4d7aec6c26a36e0837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startinghealth: 4
-  speed: 5
-  PointA: {fileID: 0}
-  PointB: {fileID: 0}
-  EnemyQuestID: Q4P1
-  rewardPoints: 1
+  m_Points:
+    m_Paths:
+    - - {x: 0.19129394, y: 0.04508861}
+      - {x: 0.110801205, y: 0.051950246}
+      - {x: 0.108428225, y: 0.21810302}
+      - {x: -0.01060031, y: 0.19801348}
+      - {x: -0.027956177, y: 0.30634335}
+      - {x: -0.17255151, y: 0.30139965}
+      - {x: -0.26238698, y: 0.21624222}
+      - {x: -0.3490639, y: 0.16852744}
+      - {x: -0.33402842, y: 0.06570434}
+      - {x: -0.2525383, y: -0.056872256}
+      - {x: -0.22259164, y: -0.17190036}
+      - {x: -0.21715671, y: -0.25811177}
+      - {x: -0.112196036, y: -0.28154173}
+      - {x: 0.026271317, y: -0.29251114}
+      - {x: 0.18381365, y: -0.14231564}
+      - {x: 0.3384847, y: -0.020756887}
+      - {x: 0.35591298, y: 0.12017507}
+      - {x: 0.31505466, y: 0.12428187}
+  m_UseDelaunayMesh: 0

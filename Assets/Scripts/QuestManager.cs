@@ -59,12 +59,21 @@ public class QuestManager : MonoBehaviour
 
     public void InitializeQuests()
     {
-        AddQuest(new Quest("Q1P1", 1, QuestType.Loot));
-        AddQuest(new Quest("Q2P1", 7, QuestType.Mine));
-        AddQuest(new Quest("Q3P1", 1, QuestType.Loot));
-        AddQuest(new Quest("Q4P1", 3, QuestType.Defeat));
-        AddQuest(new Quest("Q5P1", 1, QuestType.Forge));
+        // Check which scene/planet we're in
+        string currentScene = SceneManager.GetActiveScene().name;
         
+        if (currentScene == "Planet_1")
+        {
+            AddQuest(new Quest("Q1P1", 1, QuestType.Loot));
+            AddQuest(new Quest("Q2P1", 7, QuestType.Mine));
+            AddQuest(new Quest("Q3P1", 1, QuestType.Loot));
+            AddQuest(new Quest("Q4P1", 3, QuestType.Defeat));
+            AddQuest(new Quest("Q5P1", 1, QuestType.Forge));
+        }
+        else if (currentScene == "Planet_2")
+        {
+            AddQuest(new Quest("Q1P2", 1, QuestType.Loot));  
+        }
     }
 
     public void AddQuest(Quest quest)
@@ -101,6 +110,11 @@ public class QuestManager : MonoBehaviour
 public bool AllQuestsPlanet1Done(){
     List<Quest> p1Quests = activeQuests.FindAll(q => q.questID.Contains("P1"));
     return p1Quests.TrueForAll(q => q.isCompleted);
+
+}
+public bool AllQuestsPlanet2Done(){
+    List<Quest> p2Quests = activeQuests.FindAll(q => q.questID.Contains("P2"));
+    return p2Quests.TrueForAll(q => q.isCompleted);
 
 }
     private void RefreshQuestUI()

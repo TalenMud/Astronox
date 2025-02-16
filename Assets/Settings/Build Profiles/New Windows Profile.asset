@@ -27,6 +27,10 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Scenes/Planet_2.unity
   - m_enabled: 1
+    m_path: Assets/Scenes/Planet_3.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/ShootingRange.unity
+  - m_enabled: 1
     m_path: Assets/Scenes/DeathScreen.unity
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

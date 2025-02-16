@@ -12,6 +12,7 @@ TagManager:
   - MiningProgress
   - Rocket
   - QuestPanel
+  - Target
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - Ground
   - Liquids
-  - 
+  - PhasableObjects
   - 
   - 
   - 

@@ -21,21 +21,36 @@ public class QuestUI : MonoBehaviour
         checkmark.enabled = false;
         icon.sprite = QuestManager.instance.GetQuestIcon(quest.questType);
         questPanel.anchoredPosition = new Vector2(-questPanel.rect.width, questPanel.anchoredPosition.y); // Start off-screen
-        questPanel.DOAnchorPos(new Vector2(0, questPanel.anchoredPosition.y), 0.5f) // Slide in over 0.5 seconds
-            .SetEase(Ease.OutBack) // Use a nice easing effect
+
+        // Store reference to this component
+        QuestUI thisQuestUI = this;
+
+        questPanel.DOAnchorPos(new Vector2(0, questPanel.anchoredPosition.y), 0.5f)
+            .SetEase(Ease.OutBack)
             .OnComplete(() =>
             {
-                // Fill progress bar
+                // Check if object still exists
+                if (thisQuestUI == null) return;
+
                 Debug.Log(quest.portionDone);
-                progressBar.DOFillAmount(quest.portionDone, 1f) 
+                progressBar.DOFillAmount(quest.portionDone, 1f)
                     .OnComplete(() =>
                     {
-                        if (quest.isCompleted){
-                            checkmark.enabled =true;
+                        // Check if object still exists
+                        if (thisQuestUI == null) return;
 
+                        if (quest.isCompleted)
+                        {
+                            checkmark.enabled = true;
                         }
-                        DOVirtual.DelayedCall(2.5f, () => {
-                            Destroy(gameObject);
+
+                        DOVirtual.DelayedCall(2.5f, () =>
+                        {
+                            // Check if object still exists before destroying
+                            if (thisQuestUI != null)
+                            {
+                                Destroy(gameObject);
+                            }
                         });
                     });
             });

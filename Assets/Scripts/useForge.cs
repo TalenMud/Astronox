@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Animations;
+using System.Collections;
+using System.Collections.Generic;
+
 
 public class useForge : MonoBehaviour
 {
@@ -8,6 +12,7 @@ public class useForge : MonoBehaviour
     public Inventory inventory;
     public InventoryItem launchpad;
     public string ForgeQuestID;
+    public Animator animator;
     void Start()
     {
         forgeMessage.enabled = false; 
@@ -41,11 +46,17 @@ public class useForge : MonoBehaviour
 
     void Forge()
     {
-        Debug.Log("forging");
+        animator.SetBool("isForging", true);
         forgeMessage.enabled = false;
         QuestManager.instance.UpdateQuestProgress(ForgeQuestID, 1);
         
-       // inventory.AddItem(launchpad, 2);
+        inventory.AddItem(launchpad, 2);
+        StartCoroutine(ResetForgeAnimation());
         
+    }
+    private IEnumerator ResetForgeAnimation()
+    {
+        yield return new WaitForSeconds(1.2f); 
+        animator.SetBool("isForging", false);
     }
 }

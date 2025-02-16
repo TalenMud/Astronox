@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CopperLaunchpad
   m_EditorClassIdentifier: 
   itemName: CopperLaunchpad
-  itemIcon: {fileID: -665298968675694176, guid: e82d4e12472392847b21dae405f94574, type: 3}
+  itemIcon: {fileID: -5838643695255432610, guid: 3c40c9b5f6323b8439d8cf9a5879fafa, type: 3}
   description: 
   isTool: 1
   type: launchpad

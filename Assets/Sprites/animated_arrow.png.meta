@@ -1,10 +1,25 @@
 fileFormatVersion: 2
-guid: e82d4e12472392847b21dae405f94574
+guid: 2a70366d833235d43a36f04b012a068d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -665298968675694176
-    second: CopperLaunchpad_0
+      213: -4718768625265033684
+    second: animated_arrow_0
+  - first:
+      213: -724037291395930408
+    second: animated_arrow_1
+  - first:
+      213: 8555568089688977951
+    second: animated_arrow_2
+  - first:
+      213: -6298506011102376167
+    second: animated_arrow_3
+  - first:
+      213: 1622779083179955398
+    second: animated_arrow_4
+  - first:
+      213: -5596792298627493756
+    second: animated_arrow_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -152,13 +167,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CopperLaunchpad_0
+      name: animated_arrow_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 64
-        height: 36
+        y: 48
+        width: 32
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,8 +182,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a9c6a6ec1264c6f0800000000000000
-      internalID: -665298968675694176
+      spriteID: c2eb1d9bfe0938eb0800000000000000
+      internalID: -4718768625265033684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: animated_arrow_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d6a53a6be3b3f5f0800000000000000
+      internalID: -724037291395930408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: animated_arrow_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f12349529db7bb670800000000000000
+      internalID: 8555568089688977951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: animated_arrow_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91f849067263798a0800000000000000
+      internalID: -6298506011102376167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: animated_arrow_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c410e17af4458610800000000000000
+      internalID: 1622779083179955398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: animated_arrow_5
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4809aa6be033452b0800000000000000
+      internalID: -5596792298627493756
       vertices: []
       indices: 
       edges: []
@@ -177,7 +302,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 202238b3d93d41f45807ff7020d9b2ad
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +312,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CopperLaunchpad_0: -665298968675694176
+      animated_arrow_0: -4718768625265033684
+      animated_arrow_1: -724037291395930408
+      animated_arrow_2: 8555568089688977951
+      animated_arrow_3: -6298506011102376167
+      animated_arrow_4: 1622779083179955398
+      animated_arrow_5: -5596792298627493756
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public GameObject placementArrow;
     public static InventoryManager instance;
     public Inventory inventory; // Reference to Inventory ScriptableObject
 
@@ -20,6 +21,16 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    
+    public void Update()
+    {
+        if (inventory.CheckIfHasItem("CopperLaunchpad"))
+        {
+            placementArrow.SetActive(true);
+        }
+        else
+        {
+            placementArrow.SetActive(false);
+        }
+    }
     
 }

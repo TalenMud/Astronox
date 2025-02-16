@@ -1,37 +1,25 @@
 fileFormatVersion: 2
-guid: 34e380956ba51264e9b56d0ebdd4a581
+guid: 98720180f72851449857d4b3378740d5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5209844657548470641
-    second: forge_anim_0
+      213: -4247014011717771965
+    second: Astro_Spawn_0
   - first:
-      213: 6913966672533012844
-    second: forge_anim_1
+      213: -3001872056470671447
+    second: Astro_Spawn_1
   - first:
-      213: 514354288624600818
-    second: forge_anim_2
+      213: 2514607000409633917
+    second: Astro_Spawn_2
   - first:
-      213: 9187176682514418531
-    second: forge_anim_3
+      213: 3478795106800400119
+    second: Astro_Spawn_3
   - first:
-      213: 7558873333842155638
-    second: forge_anim_4
+      213: -3482294876036931696
+    second: Astro_Spawn_4
   - first:
-      213: -3852430043577466643
-    second: forge_anim_5
-  - first:
-      213: -6325024969981788271
-    second: forge_anim_6
-  - first:
-      213: 4642165134614609687
-    second: forge_anim_7
-  - first:
-      213: -5450220073364284031
-    second: forge_anim_8
-  - first:
-      213: 4432210847626906116
-    second: forge_anim_9
+      213: 4680820093846767488
+    second: Astro_Spawn_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -78,7 +66,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -102,7 +90,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -179,13 +167,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: forge_anim_0
+      name: Astro_Spawn_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
-        width: 32
-        height: 32
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,42 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 179a424fc161d4840800000000000000
-      internalID: 5209844657548470641
+      spriteID: 34d947b02439f05c0800000000000000
+      internalID: -4247014011717771965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: forge_anim_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c6148319e0853ff50800000000000000
-      internalID: 6913966672533012844
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: forge_anim_2
+      name: Astro_Spawn_1
       rect:
         serializedVersion: 2
         x: 64
-        y: 96
-        width: 32
-        height: 32
+        y: 128
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -238,20 +204,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f60b26108a532700800000000000000
-      internalID: 514354288624600818
+      spriteID: 9afe4ece4453756d0800000000000000
+      internalID: -3001872056470671447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: forge_anim_3
+      name: Astro_Spawn_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7470217ebda5e220800000000000000
+      internalID: 2514607000409633917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Astro_Spawn_3
       rect:
         serializedVersion: 2
         x: 0
         y: 64
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -260,42 +248,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 36b060a54886f7f70800000000000000
-      internalID: 9187176682514418531
+      spriteID: 7f6743bd7b9274030800000000000000
+      internalID: 3478795106800400119
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: forge_anim_4
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 67895dd9f3386e860800000000000000
-      internalID: 7558873333842155638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: forge_anim_5
+      name: Astro_Spawn_4
       rect:
         serializedVersion: 2
         x: 64
         y: 64
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -304,20 +270,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de0c582594b698ac0800000000000000
-      internalID: -3852430043577466643
+      spriteID: 09fd7ae92476cafc0800000000000000
+      internalID: -3482294876036931696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: forge_anim_6
+      name: Astro_Spawn_5
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
+        x: 128
+        y: 64
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -326,74 +292,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 19f72cc1d4ff838a0800000000000000
-      internalID: -6325024969981788271
+      spriteID: 0874f37431d95f040800000000000000
+      internalID: 4680820093846767488
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: forge_anim_7
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 71f386d38984c6040800000000000000
-      internalID: 4642165134614609687
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: forge_anim_8
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 18d1b6348bdec54b0800000000000000
-      internalID: -5450220073364284031
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: forge_anim_9
+      name: Astro_Spawn_6
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 64
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 40a4f667840628d30800000000000000
-      internalID: 4432210847626906116
+      spriteID: 3cd87a3829854c84da5c15b8f1bb7466
+      internalID: 8025779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Astro_Spawn_7
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce96d4d46a5daa34ea57bc0f2f186cb6
+      internalID: 1514292734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Astro_Spawn_8
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcddafe9ebea8704da257a75ee1359e9
+      internalID: -1332733600
       vertices: []
       indices: 
       edges: []
@@ -402,7 +368,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 443172ebea27b6a4e9bcef1a481f38ee
+    spriteID: b9fd9c513543f914d9a2820eb70f8c49
     internalID: 0
     vertices: []
     indices: 
@@ -412,16 +378,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      forge_anim_0: 5209844657548470641
-      forge_anim_1: 6913966672533012844
-      forge_anim_2: 514354288624600818
-      forge_anim_3: 9187176682514418531
-      forge_anim_4: 7558873333842155638
-      forge_anim_5: -3852430043577466643
-      forge_anim_6: -6325024969981788271
-      forge_anim_7: 4642165134614609687
-      forge_anim_8: -5450220073364284031
-      forge_anim_9: 4432210847626906116
+      Astro_Spawn_0: -4247014011717771965
+      Astro_Spawn_1: -3001872056470671447
+      Astro_Spawn_2: 2514607000409633917
+      Astro_Spawn_3: 3478795106800400119
+      Astro_Spawn_4: -3482294876036931696
+      Astro_Spawn_5: 4680820093846767488
+      Astro_Spawn_6: 8025779
+      Astro_Spawn_7: 1514292734
+      Astro_Spawn_8: -1332733600
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
