@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 
 {
+    public PauseMenu pauseSystem;
      private float lastMineTime = 0f;
      private float mineCooldown = 0.5f;
     private float horizontal;
@@ -22,7 +23,8 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-
+        if (pauseSystem.GetIsPaused()) 
+        { return; }
 
         horizontal = Input.GetAxisRaw("Horizontal");
 
