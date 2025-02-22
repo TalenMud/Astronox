@@ -16,8 +16,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float sinkSpeed = 1f;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] float groundCheckDistance = 5f;
     [SerializeField] private LayerMask groundLayer;
+    private RaycastHit2D floorHit;
 
 
     
@@ -27,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         { return; }
 
         horizontal = Input.GetAxisRaw("Horizontal");
+        floorHit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -57,6 +59,10 @@ public class PlayerMovement : MonoBehaviour
 
         
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+        
+
+
 
         
         RaycastHit2D hit = Physics2D.Raycast(worldPosition, Vector2.zero);
@@ -107,9 +113,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+         return floorHit.collider != null; 
+
     }
 
     private void Flip()
@@ -121,4 +128,4 @@ public class PlayerMovement : MonoBehaviour
            
         }
     }
-}
+    }

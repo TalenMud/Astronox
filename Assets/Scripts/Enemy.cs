@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
     public int startinghealth = 4;
     private int enemyHealth;
     public float speed = 0.5f;
     public float chaseSpeed = 1f;
-    public float detectionRange = 5f; 
+    public float detectionRange = 5f;
     public GameObject PointA;
     public GameObject PointB;
     private Rigidbody2D rb;
@@ -16,8 +17,9 @@ public class Enemy : MonoBehaviour
     private Transform player;
     public string EnemyQuestID;
     public int rewardPoints;
-    private bool isWaiting = false; 
+    private bool isWaiting = false;
     private bool isChasing = false;
+    public LayerMask obstacleLayer; // Added for sight check
 
     [Header("Health System")]
     public float maxHealth = 5f;
@@ -36,21 +38,20 @@ public class Enemy : MonoBehaviour
         enemyHealth = startinghealth;
         player = GameObject.FindGameObjectWithTag("Player").transform;
         currentHealth = maxHealth;
-        // Create health bar but keep it hidden initially
         healthBarInstance = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-        healthBarInstance.transform.SetParent(transform); // Parent to enemy
-        healthBarInstance.transform.localPosition = new Vector3(0, 1f, 0); // Position above enemy
+        healthBarInstance.transform.SetParent(transform);
+        healthBarInstance.transform.localPosition = new Vector3(0, 1f, 0);
         healthFillImage = healthBarInstance.transform.Find("Background/Fill").GetComponent<Image>();
         healthBarInstance.SetActive(false);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         if (!isWaiting)
         {
-            // Check if player is within detection range
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-            
+
             if (distanceToPlayer < detectionRange)
             {
                 isChasing = true;
@@ -63,7 +64,6 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        // Handle health bar visibility
         if (isHealthBarVisible)
         {
             healthBarTimer -= Time.deltaTime;
@@ -72,25 +72,46 @@ public class Enemy : MonoBehaviour
                 HideHealthBar();
             }
         }
+        FlipSprite();
     }
 
-    bool IsPlayerBetweenPoints()
+    void FlipSprite()
     {
-        // Get the bounds of the patrol area
-        float minX = Mathf.Min(PointA.transform.position.x, PointB.transform.position.x);
-        float maxX = Mathf.Max(PointA.transform.position.x, PointB.transform.position.x);
-        float minY = Mathf.Min(PointA.transform.position.y, PointB.transform.position.y);
-        float maxY = Mathf.Max(PointA.transform.position.y, PointB.transform.position.y);
-
-        // Check if player is within bounds
-        return player.position.x >= minX && player.position.x <= maxX &&
-               player.position.y >= minY && player.position.y <= maxY;
+        if (rb.linearVelocity.x > 0.1f) 
+        {
+            spriteRenderer.flipX = true; 
+        }
+        else if (rb.linearVelocity.x < -0.1f) 
+        {
+            spriteRenderer.flipX = false; 
+        }
     }
-
     void ChasePlayer()
     {
         Vector2 direction = (player.position - transform.position).normalized;
-        rb.linearVelocity = direction * chaseSpeed;
+        float currentSpeed = speed;
+
+        if (CanSeePlayer())
+        {
+            currentSpeed = chaseSpeed;
+        }
+
+        rb.linearVelocity = direction * currentSpeed;
+    }
+
+    bool CanSeePlayer()
+    {
+        Vector2 direction = (player.position - transform.position).normalized;
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, detectionRange, obstacleLayer);
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.transform == player)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     void MoveTowardsWaypoint()
@@ -123,7 +144,7 @@ public class Enemy : MonoBehaviour
         {
             currentPoint = PointA.transform;
         }
-        else if (currentPoint == PointA.transform) 
+        else if (currentPoint == PointA.transform)
         {
             currentPoint = PointB.transform;
         }
@@ -131,9 +152,9 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (PointA != null && PointB != null) // Check if points are assigned
+        if (PointA != null && PointB != null)
         {
-            Gizmos.DrawWireSphere(PointA.transform.position, 1.2f); 
+            Gizmos.DrawWireSphere(PointA.transform.position, 1.2f);
             Gizmos.DrawWireSphere(PointB.transform.position, 1.2f);
             Gizmos.DrawLine(PointA.transform.position, PointB.transform.position);
         }

@@ -13,6 +13,7 @@ public class useForge : MonoBehaviour
     public InventoryItem launchpad;
     public string ForgeQuestID;
     public Animator animator;
+    public Sprite copperOreIcon;
     void Start()
     {
         forgeMessage.enabled = false; 
@@ -24,6 +25,10 @@ public class useForge : MonoBehaviour
         if (isInRange && Input.GetKeyDown(KeyCode.E) && inventory.FindQuantityOfItem("Copper Ore") >= 7)
         {
             Forge();
+        }
+        if (isInRange && Input.GetKeyDown(KeyCode.E) && inventory.FindQuantityOfItem("Copper Ore") < 7)
+        {
+            UIManager.instance.ShowPopup(false, copperOreIcon);
         }
     }
 

@@ -21,4 +21,11 @@ public void TogglePauseMenu()
         Time.timeScale = isPaused ? 0 : 1;
         pauseScreen.SetActive(isPaused);
 }
+
+public void exitGame()
+{
+    //Quit();
+
+
+}
 }
