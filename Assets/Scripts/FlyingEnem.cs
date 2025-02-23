@@ -4,13 +4,20 @@ using UnityEngine.UI;
 
 public class FlyingEnem : MonoBehaviour
 {
-     public float flyingHeight = 3f;
+    [Header("Knockback")]
+    public float knockbackStrength = 500f;
+    public float knockbackDuration = 1f;
+    private float knockbackTimer;
+    private Vector2 knockbackDirection;
+    private bool isKnockbacked = false;
+
+    public float flyingHeight = 3f;
     public float swoopSpeed = 5f;
     public float returnSpeed = 3f;
     public float swoopInterval = 5f;
     public float swoopDuration = 2f;
     public LayerMask groundLayer;
-    public string requiredQuestID = "Q3P1"; 
+    public string requiredQuestID = "Q3P1";
 
     public Inventory inventory;
     private Transform player;
@@ -21,7 +28,7 @@ public class FlyingEnem : MonoBehaviour
     private bool isSwooping = false;
 
     [Header("Health System")]
-    public float maxHealth = 3f; 
+    public float maxHealth = 3f;
     private float currentHealth;
     public GameObject healthBarPrefab;
     private GameObject healthBarInstance;
@@ -31,45 +38,41 @@ public class FlyingEnem : MonoBehaviour
     private bool isHealthBarVisible = false;
 
     void Start()
-{
-    rb = GetComponent<Rigidbody2D>();
-    player = GameObject.FindGameObjectWithTag("Player").transform;
-
-    // Find the spawner.
-    GameObject spawner = GameObject.Find("FlyingEnemySpawner"); // Replace with your spawner's name
-
-    if (spawner != null)
     {
-        // Set the enemy's position to the spawner's position.
-        transform.position = spawner.transform.position;
-        // find the ground below the enemy.
-        RaycastHit2D flyingenemyfloor = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
-        if (flyingenemyfloor.collider != null)
+        rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        GameObject spawner = GameObject.Find("FlyingEnemySpawner");
+
+        if (spawner != null)
         {
-            startPosition = new Vector2(transform.position.x, flyingenemyfloor.point.y + flyingHeight);
-            transform.position = startPosition;
+            transform.position = spawner.transform.position;
+            RaycastHit2D flyingenemyfloor = Physics2D.Raycast(transform.position, Vector2.down, Mathf.Infinity, groundLayer);
+            if (flyingenemyfloor.collider != null)
+            {
+                startPosition = new Vector2(transform.position.x, flyingenemyfloor.point.y + flyingHeight);
+                transform.position = startPosition;
+            }
+        }
+        else
+        {
+            Debug.LogError("FlyingEnemySpawner not found!");
         }
 
-    }
-    else
-    {
-        Debug.LogError("FlyingEnemySpawner not found!");
-    }
+        swoopTimer = swoopInterval;
 
-    swoopTimer = swoopInterval;
-
-    currentHealth = maxHealth;
-    healthBarInstance = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
-    healthBarInstance.transform.SetParent(transform);
-    healthBarInstance.transform.localPosition = new Vector3(0, 1f, 0);
-    healthFillImage = healthBarInstance.transform.Find("Background/Fill").GetComponent<Image>();
-    healthBarInstance.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-    healthBarInstance.SetActive(false);
-}
+        currentHealth = maxHealth;
+        healthBarInstance = Instantiate(healthBarPrefab, transform.position, Quaternion.identity);
+        healthBarInstance.transform.SetParent(transform);
+        healthBarInstance.transform.localPosition = new Vector3(0, 1f, 0);
+        healthFillImage = healthBarInstance.transform.Find("Background/Fill").GetComponent<Image>();
+        healthBarInstance.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        healthBarInstance.SetActive(false);
+    }
 
     void Update()
     {
-        if (inventory.CheckIfHasItem("SpaceGun")) 
+        if (inventory.CheckIfHasItem("SpaceGun"))
         {
             swoopTimer -= Time.deltaTime;
 
@@ -110,24 +113,37 @@ public class FlyingEnem : MonoBehaviour
     }
 
     void FixedUpdate()
+{
+    if (isKnockbacked)
     {
-        if (isSwooping)
+        if (knockbackTimer > 0)
         {
-            Vector2 direction = (player.position - transform.position).normalized;
-            rb.linearVelocity = direction * swoopSpeed;
+            rb.AddForce(knockbackDirection * knockbackStrength, ForceMode2D.Impulse); // Use AddForce
+            knockbackTimer -= Time.fixedDeltaTime;
         }
         else
         {
-            rb.linearVelocity = Vector2.up * returnSpeed;
-            if (transform.position.y >= startPosition.y)
-            {
-                rb.linearVelocity = Vector2.zero;
-                transform.position = startPosition;
-            }
+            isKnockbacked = false;
+            rb.velocity = Vector2.zero;
         }
     }
+    else if (isSwooping)
+    {
+        Vector2 direction = (player.position - transform.position).normalized;
+        rb.linearVelocity = direction * swoopSpeed;
+    }
+    else
+    {
+        rb.linearVelocity = Vector2.up * returnSpeed;
+        if (transform.position.y >= startPosition.y)
+        {
+            rb.linearVelocity = Vector2.zero;
+            transform.position = startPosition;
+        }
+    }
+}
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Transform damageSource)
     {
         currentHealth -= damage;
         ShowHealthBar();
@@ -137,6 +153,17 @@ public class FlyingEnem : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            ApplyKnockback(damageSource);
+        }
+    }
+
+    void ApplyKnockback(Transform damageSource)
+    {
+        isKnockbacked = true;
+        knockbackTimer = knockbackDuration;
+        knockbackDirection = (transform.position - damageSource.position).normalized;
     }
 
     void ShowHealthBar()
@@ -164,4 +191,28 @@ public class FlyingEnem : MonoBehaviour
             Destroy(healthBarInstance);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("gunLazer"))
+        {
+            TakeDamage(1, other.transform);
+            Destroy(other.gameObject);
+        }
+    }
+
+    public void StopSwooping()
+{
+    isSwooping = false;
+    swoopTimer = swoopInterval; 
+    
+}
+
+private void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.CompareTag("Player"))
+    {
+        StopSwooping();
+    }
+}
 }

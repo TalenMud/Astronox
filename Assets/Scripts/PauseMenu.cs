@@ -24,8 +24,9 @@ public void TogglePauseMenu()
 
 public void exitGame()
 {
-    //Quit();
-
-
+    Application.Quit();
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
 }
 }

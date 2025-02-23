@@ -87,17 +87,27 @@ public class PlayerHealth : MonoBehaviour
 
 
     private void OnCollisionEnter2D(Collision2D enemyCollision)
+{
+    if (enemyCollision.gameObject.CompareTag("Enemy"))
     {
-        if (enemyCollision.gameObject.CompareTag("Enemy"))
+        TakeDamage(1);
+
+        Rigidbody2D playerRb = GetComponent<Rigidbody2D>();
+        if (playerRb != null)
         {
-            TakeDamage(1);
-            if (!isTakingDamage) 
-            {
-                isTakingDamage = true;
-                damageCoroutine = StartCoroutine(DamageOverTime());
-            }
+            Vector2 knockbackDirection = (transform.position - enemyCollision.transform.position).normalized;
+            float knockbackStrength = 3f; // Adjusted knockback strength
+            playerRb.AddForce(knockbackDirection * knockbackStrength, ForceMode2D.Impulse);
+        }
+
+        if (!isTakingDamage)
+        {
+            isTakingDamage = true;
+            damageCoroutine = StartCoroutine(DamageOverTime());
         }
     }
+}
+
 
     private void OnCollisionExit2D(Collision2D enemyCollision)
     {
