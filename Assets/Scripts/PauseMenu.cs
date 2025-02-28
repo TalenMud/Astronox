@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections;
 
+
 public class PauseMenu : MonoBehaviour
 {
 public GameObject pauseScreen;
@@ -20,6 +21,11 @@ public void TogglePauseMenu()
     isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
         pauseScreen.SetActive(isPaused);
+}
+
+
+public void saveGame(){
+    QuestManager.instance.SaveQuests();
 }
 
 public void exitGame()

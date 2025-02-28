@@ -4,18 +4,24 @@ using UnityEngine.UI;
 
 public class FlyingEnem : MonoBehaviour
 {
+    [Header("Flying Back Up Smoothly")]
+    private bool isFlyingBackUp = false;
+    private Vector2 flyBackTargetPosition;
+    private float flyBackTimer = 0f;
+    public float flyBackDuration = 5f;
+
     [Header("Knockback")]
     public float knockbackStrength = 500f;
-    public float knockbackDuration = 1f;
+    public float knockbackDuration = 3f;
     private float knockbackTimer;
     private Vector2 knockbackDirection;
     private bool isKnockbacked = false;
 
-    public float flyingHeight = 3f;
-    public float swoopSpeed = 5f;
+    public float flyingHeight = 10f;
+    public float swoopSpeed = 3f;
     public float returnSpeed = 3f;
-    public float swoopInterval = 5f;
-    public float swoopDuration = 2f;
+    public float swoopInterval = 3f;
+    public float swoopDuration = 6f;
     public LayerMask groundLayer;
     public string requiredQuestID = "Q3P1";
 
@@ -107,10 +113,13 @@ public class FlyingEnem : MonoBehaviour
     }
 
     void ReturnToHeight()
-    {
-        isSwooping = false;
-        swoopTimer = swoopInterval;
-    }
+{
+    isSwooping = false;
+    swoopTimer = swoopInterval;
+    isFlyingBackUp = true;
+    flyBackTargetPosition = startPosition; 
+    flyBackTimer = 0f; 
+}
 
     void FixedUpdate()
 {
@@ -118,13 +127,13 @@ public class FlyingEnem : MonoBehaviour
     {
         if (knockbackTimer > 0)
         {
-            rb.AddForce(knockbackDirection * knockbackStrength, ForceMode2D.Impulse); // Use AddForce
+            rb.AddForce(knockbackDirection * knockbackStrength, ForceMode2D.Impulse);
             knockbackTimer -= Time.fixedDeltaTime;
         }
         else
         {
             isKnockbacked = false;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
         }
     }
     else if (isSwooping)
@@ -132,7 +141,20 @@ public class FlyingEnem : MonoBehaviour
         Vector2 direction = (player.position - transform.position).normalized;
         rb.linearVelocity = direction * swoopSpeed;
     }
-    else
+    else if (isFlyingBackUp) // Correct placement
+    {
+        flyBackTimer += Time.fixedDeltaTime;
+        float progress = Mathf.Clamp01(flyBackTimer / flyBackDuration);
+        rb.position = Vector2.Lerp(rb.position, flyBackTargetPosition, progress);
+
+        if (progress >= 1f)
+        {
+            isFlyingBackUp = false;
+            rb.linearVelocity = Vector2.zero;
+            transform.position = startPosition;
+        }
+    }
+    else if (!isFlyingBackUp) // Correct placement
     {
         rb.linearVelocity = Vector2.up * returnSpeed;
         if (transform.position.y >= startPosition.y)
@@ -202,17 +224,19 @@ public class FlyingEnem : MonoBehaviour
     }
 
     public void StopSwooping()
-{
-    isSwooping = false;
-    swoopTimer = swoopInterval; 
-    
-}
+    {
+        isSwooping = false;
+        swoopTimer = swoopInterval;
+    }
 
-private void OnCollisionEnter2D(Collision2D collision)
-{
-    if (collision.gameObject.CompareTag("Player"))
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
     {
         StopSwooping();
+        isFlyingBackUp = true;
+        flyBackTargetPosition = startPosition;
+        flyBackTimer = 0f;
     }
-}
+    }
 }

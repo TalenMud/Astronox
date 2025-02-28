@@ -6,6 +6,10 @@ using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
+    public Enemy enemyScript;
+    public GameObject player;
+    public float thrust;
+    public float knockTime;
     public float maxHealth = 10;
     public Image healthBar;
     public float currentHealth;
@@ -41,7 +45,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (currentHealth > maxHealth)
@@ -86,41 +90,46 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D enemyCollision)
+private void OnCollisionEnter2D(Collision2D enemyCollision)
 {
     if (enemyCollision.gameObject.CompareTag("Enemy"))
     {
         TakeDamage(1);
-
-        Rigidbody2D playerRb = GetComponent<Rigidbody2D>();
+        Debug.Log("Enemy");
+    
+        Rigidbody2D playerRb = GetComponent<Rigidbody2D>(); 
         if (playerRb != null)
         {
-            Vector2 knockbackDirection = (transform.position - enemyCollision.transform.position).normalized;
-            float knockbackStrength = 3f; // Adjusted knockback strength
-            playerRb.AddForce(knockbackDirection * knockbackStrength, ForceMode2D.Impulse);
+            
+            Vector2 difference = transform.position - enemyCollision.transform.position;
+            difference = difference.normalized * thrust;
+            playerRb.AddForce(difference, ForceMode2D.Impulse); 
+
+            StartCoroutine(KnockCo(playerRb)); 
         }
 
-        if (!isTakingDamage)
+        
+        Rigidbody2D enemy = enemyCollision.collider.GetComponent<Rigidbody2D>();
+        if (enemy != null)
         {
-            isTakingDamage = true;
-            damageCoroutine = StartCoroutine(DamageOverTime());
+            Vector2 enemyDifference = enemy.transform.position - transform.position;
+            enemyDifference = enemyDifference.normalized * thrust;
+            enemy.AddForce(enemyDifference, ForceMode2D.Impulse);
+
+            StartCoroutine(KnockCo(enemy));
         }
     }
 }
 
 
-    private void OnCollisionExit2D(Collision2D enemyCollision)
+    private IEnumerator KnockCo(Rigidbody2D enemy)
     {
-        if (enemyCollision.gameObject.CompareTag("Enemy"))
+        if (enemy != null)
         {
-            isTakingDamage = false;
-            if (damageCoroutine != null)
-            {
-                StopCoroutine(damageCoroutine); 
-                damageCoroutine = null;
-            }
+            yield return new WaitForSeconds(knockTime);
+            enemy.linearVelocity = Vector2.zero;
+            
         }
-
-        
     }
+
 }

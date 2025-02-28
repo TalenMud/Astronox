@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1151022402775268265}
   - component: {fileID: 789731444650897556}
   - component: {fileID: 2775305252016916991}
-  - component: {fileID: 9220711781346350262}
+  - component: {fileID: 7933122590912913832}
   m_Layer: 0
   m_Name: Sewpop
   m_TagString: Enemy
@@ -102,11 +102,11 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 20
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b366eb64f300454db8342d37168fb58e, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -116,7 +116,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 2
+  m_Constraints: 4
 --- !u!114 &2775305252016916991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,10 +137,13 @@ MonoBehaviour:
   PointB: {fileID: 0}
   EnemyQuestID: Q4P1
   rewardPoints: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
   maxHealth: 5
   healthBarPrefab: {fileID: 7703358275152344772, guid: eca642efeea17ab4ca052f711f7511f9, type: 3}
---- !u!60 &9220711781346350262
-PolygonCollider2D:
+--- !u!61 &7933122590912913832
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -183,24 +186,5 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.19129394, y: 0.04508861}
-      - {x: 0.110801205, y: 0.051950246}
-      - {x: 0.108428225, y: 0.21810302}
-      - {x: -0.01060031, y: 0.19801348}
-      - {x: -0.027956177, y: 0.30634335}
-      - {x: -0.17255151, y: 0.30139965}
-      - {x: -0.26238698, y: 0.21624222}
-      - {x: -0.3490639, y: 0.16852744}
-      - {x: -0.33402842, y: 0.06570434}
-      - {x: -0.2525383, y: -0.056872256}
-      - {x: -0.22259164, y: -0.17190036}
-      - {x: -0.21715671, y: -0.25811177}
-      - {x: -0.112196036, y: -0.28154173}
-      - {x: 0.026271317, y: -0.29251114}
-      - {x: 0.18381365, y: -0.14231564}
-      - {x: 0.3384847, y: -0.020756887}
-      - {x: 0.35591298, y: 0.12017507}
-      - {x: 0.31505466, y: 0.12428187}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 0.734375, y: 0.625}
+  m_EdgeRadius: 0

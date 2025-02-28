@@ -134,7 +134,19 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator WaitAtWaypoint()
+    public void OnCollisionEnter2D(Collision2D enemyCollision)
+    {
+        if (enemyCollision.gameObject.CompareTag("Player"))
+        {
+            Rigidbody2D playerRb = enemyCollision.gameObject.GetComponent<Rigidbody2D>();
+            if (playerRb != null)
+            {
+                WaitAtWaypoint();
+            }
+        }
+    }
+
+    public IEnumerator WaitAtWaypoint()
     {
         isWaiting = true;
         yield return new WaitForSeconds(2f);

@@ -17,6 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DeathScreen.unity
     guid: b258fc804fe588148ae7d88444c505e0
+  - enabled: 1
+    path: Assets/Scenes/BountyHuntMenu.unity
+    guid: aa8f9d796aef08d908c344be79d8074f
+  - enabled: 1
+    path: Assets/Scenes/Planet_2.unity
+    guid: 58497cb626d196b449adaf38c50075c5
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
